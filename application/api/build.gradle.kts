@@ -10,7 +10,6 @@ dependencyManagement {
 
 dependencies {
     implementation(project(":storage:rds"))
-    implementation(project(":storage:vectordb"))
     implementation(project(":storage:memorydb"))
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -18,6 +17,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.ai:spring-ai-ollama-spring-boot-starter")
+    implementation("org.springframework.ai:spring-ai-milvus-store-spring-boot-starter")
 
     implementation("org.springframework.boot:spring-boot-devtools")
 }

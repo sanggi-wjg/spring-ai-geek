@@ -6,13 +6,12 @@ spring:
   config:
     import:
       - storage-rds.yaml
-      - storage-vectordb.yaml
       - storage-memorydb.yaml
   ai:
     ollama:
       init:
         timeout: 5m
-        max-retries: 1
+        max-retries: 0
         pull-model-strategy: never
 
 ---
@@ -26,6 +25,15 @@ spring:
         model: exaone3.5:7.8b
       embedding:
         model: mxbai-embed-large:latest
+
+    vectorstore:
+      milvus:
+        client:
+          host: "localhost"
+          port: 19530
+          username: "minioadmin"
+          password: "minioadmin"
+        embedding-dimension: 1024
 
 ---
 spring.config.activate.on-profile: dev

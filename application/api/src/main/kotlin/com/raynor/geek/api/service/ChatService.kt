@@ -21,11 +21,11 @@ class ChatService(
                 this.model = OllamaMyModel.EXAONE_3_5_8b.value
             }
         )
-        return this.ollamaChatModel.call(prompt)
+        return ollamaChatModel.call(prompt)
     }
 
     fun chatStream(): Flux<ChatResponse> {
         val prompt = Prompt("안녕? 자기 소개 해줘")
-        return this.ollamaChatModel.stream(prompt)
+        return ollamaChatModel.stream(prompt)
     }
 }

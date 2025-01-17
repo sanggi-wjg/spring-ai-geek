@@ -4,7 +4,7 @@ import org.springframework.ai.embedding.EmbeddingModel
 import org.springframework.stereotype.Service
 
 @Service
-class EmbedService(
+class EmbedSimpleService(
     private val embeddingModel: EmbeddingModel,
 ) {
     fun embed(): FloatArray {

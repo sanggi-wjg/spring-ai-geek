@@ -25,7 +25,7 @@ class MilvusConfig {
         return MilvusVectorStore.builder(milvusClient, embeddingModel)
             .databaseName(DEFAULT_DATABASE)
             .collectionName(GEEK_STORE)
-            .initializeSchema(false)
+            .initializeSchema(true)
             .autoId(true)
             .embeddingDimension(1024)
             .indexType(IndexType.IVF_FLAT)

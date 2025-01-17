@@ -33,7 +33,10 @@ spring:
           port: 19530
           username: "minioadmin"
           password: "minioadmin"
-        embedding-dimension: 1024
+
+logging:
+  level:
+    org.springframework: TRACE
 
 ---
 spring.config.activate.on-profile: dev

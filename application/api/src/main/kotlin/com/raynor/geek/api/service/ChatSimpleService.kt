@@ -9,23 +9,20 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
 @Service
-class ChatService(
-    private val ollamaChatModel: OllamaChatModel,
-    private val embedService: EmbedService,
+class ChatSimpleService(
+    private val llm: OllamaChatModel,
+    private val embedSimpleService: EmbedSimpleService,
 ) {
-
     fun chat(): ChatResponse {
         val prompt = Prompt(
             "안녕? 자기 소개 해줘",
-            OllamaOptions().apply {
-                this.model = OllamaMyModel.EXAONE_3_5_8b.value
-            }
+            OllamaOptions.builder().model(OllamaMyModel.EXAONE_3_5_8b.model).build()
         )
-        return ollamaChatModel.call(prompt)
+        return llm.call(prompt)
     }
 
     fun chatStream(): Flux<ChatResponse> {
         val prompt = Prompt("안녕? 자기 소개 해줘")
-        return ollamaChatModel.stream(prompt)
+        return llm.stream(prompt)
     }
 }

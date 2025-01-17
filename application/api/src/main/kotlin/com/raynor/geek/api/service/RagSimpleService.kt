@@ -28,7 +28,6 @@ class RagSimpleService(
                 "question" to userInput
             )
         ).create()
-
         return llm.call(prompt)
     }
 

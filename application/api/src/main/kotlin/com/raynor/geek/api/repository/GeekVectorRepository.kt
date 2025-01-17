@@ -2,7 +2,6 @@ package com.raynor.geek.api.repository
 
 import com.raynor.geek.api.annotation.VectorRepository
 import com.raynor.geek.api.vectordb.MilvusConfig
-import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor
 import org.springframework.ai.document.Document
 import org.springframework.ai.vectorstore.SearchRequest
 import org.springframework.ai.vectorstore.VectorStore
@@ -21,17 +20,14 @@ class GeekVectorRepository(
         return vectorStore.delete(ids)?.get() ?: false
     }
 
-    fun similaritySearch(query: String, topK: Int): List<Document> {
-        val request = SearchRequest.builder().query(query).topK(topK).build()
-        return vectorStore.similaritySearch(request)
-            ?: emptyList()
-    }
-
-    fun getQaAdvisor(similarityThreshold: Double = 0.8, topK: Int = 5): QuestionAnswerAdvisor {
+    fun similaritySearch(
+        query: String,
+        topK: Int = 5
+    ): List<Document> {
         val request = SearchRequest.builder()
-            .similarityThreshold(similarityThreshold)
+            .query(query)
             .topK(topK)
             .build()
-        return QuestionAnswerAdvisor(vectorStore, request)
+        return vectorStore.similaritySearch(request) ?: emptyList()
     }
 }

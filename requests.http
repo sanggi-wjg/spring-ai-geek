@@ -1,0 +1,7 @@
+### 웹 검색
+POST http://localhost:8080/search
+Content-Type: application/json
+
+{
+  "query": "개발자 채용 시장"
+}

@@ -1,5 +1,11 @@
 package com.raynor.geek.client.tavily.dto
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.annotation.JsonNaming
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
 data class TavilySearchRequestDto(
     val apiKey: String,
 
@@ -11,7 +17,7 @@ data class TavilySearchRequestDto(
 
     /* The category of the search. This will determine which of our agents will be used for the search.
      * Currently: only "general" and "news" are supported. Default is "general". */
-    val topic: String? = null,
+    val topic: String = "general",
 
     /* The number of days back from the current date to include in the search results.
      * This specifies the time frame of data to be retrieved.
@@ -24,7 +30,7 @@ data class TavilySearchRequestDto(
     val timeRange: String? = null,
 
     /* The maximum number of search results to return. Default is 5. */
-    val maxResults: Int? = null,
+    val maxResults: Int = 10,
 
     /* Include a list of query-related images in the response. Default is False. */
     val includeImages: Boolean? = null,

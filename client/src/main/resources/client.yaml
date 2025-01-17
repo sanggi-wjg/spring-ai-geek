@@ -5,6 +5,10 @@ spring.cloud.openfeign:
         connectTimeout: 5000
         readTimeout: 5000
         loggerLevel: full
+        retry:
+          period: 100
+          maxPeriod: 1000
+          maxAttempts: 0
   httpclient:
     max-connections: 2000
     max-connection-per-route: 500

@@ -20,9 +20,11 @@ class TavilyClient(
                 apiKey = tavilyProperty.key,
                 query = query,
                 maxResults = 10,
-                includeImages = true,
+                includeImages = false,
+                includeImagesDescriptions = false,
             )
             tavilyAPI.search(request)
+
         }.onFailure {
             logger.error("Tavily api search failed", it)
         }

@@ -3,9 +3,7 @@ package com.raynor.geek.api.repository
 import com.raynor.geek.api.annotation.VectorRepository
 import com.raynor.geek.api.vectordb.MilvusConfig
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor
-import org.springframework.ai.chat.client.advisor.RetrievalAugmentationAdvisor
 import org.springframework.ai.document.Document
-import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever
 import org.springframework.ai.vectorstore.SearchRequest
 import org.springframework.ai.vectorstore.VectorStore
 import org.springframework.beans.factory.annotation.Qualifier
@@ -30,17 +28,10 @@ class GeekVectorRepository(
     }
 
     fun getQaAdvisor(similarityThreshold: Double = 0.8, topK: Int = 5): QuestionAnswerAdvisor {
-        RetrievalAugmentationAdvisor.builder()
-            .documentRetriever(
-                VectorStoreDocumentRetriever.builder()
-                    .similarityThreshold(similarityThreshold)
-                    .topK(topK)
-                    .vectorStore(vectorStore)
-                    .build()
-            )
+        val request = SearchRequest.builder()
+            .similarityThreshold(similarityThreshold)
+            .topK(topK)
             .build()
-
-        val request = SearchRequest.builder().similarityThreshold(similarityThreshold).topK(topK).build()
         return QuestionAnswerAdvisor(vectorStore, request)
     }
 }

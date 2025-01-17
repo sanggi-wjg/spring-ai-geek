@@ -11,6 +11,7 @@ dependencyManagement {
 dependencies {
     implementation(project(":storage:rds"))
     implementation(project(":storage:memorydb"))
+    implementation(project(":client"))
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 

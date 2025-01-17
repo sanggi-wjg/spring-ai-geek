@@ -70,6 +70,16 @@ services:
       - "etcd"
       - "minio"
 
+  attu:
+    container_name: geek-attu
+    image: zilliz/attu
+    environment:
+      MILVUS_URL: standalone:19530
+    ports:
+      - "9002:3000"
+    depends_on:
+      - standalone
+
 networks:
   default:
     name: spring-ai-geek

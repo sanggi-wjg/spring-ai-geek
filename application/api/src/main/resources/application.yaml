@@ -6,19 +6,33 @@ spring:
   config:
     import:
       - storage-rds.yaml
-      - storage-vectordb.yaml
       - storage-memorydb.yaml
+      - client.yaml
   ai:
     ollama:
       init:
         timeout: 5m
-        max-retries: 1
+        max-retries: 0
         pull-model-strategy: never
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  shutdown: graceful
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+    min-response-size: 2KB
+    excluded-user-agents: MSIE 6.0,UCBrowser
 
 ---
 spring.config.activate.on-profile: local
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
   ai:
     ollama:
       base-url: http://localhost:11434
@@ -27,6 +41,18 @@ spring:
       embedding:
         model: mxbai-embed-large:latest
 
+    vectorstore:
+      milvus:
+        client:
+          host: "localhost"
+          port: 19530
+          username: "minioadmin"
+          password: "minioadmin"
+
+logging:
+  level:
+    org.springframework: INFO
+
 ---
 spring.config.activate.on-profile: dev
 
@@ -34,4 +60,4 @@ spring.config.activate.on-profile: dev
 spring.config.activate.on-profile: stage
 
 ---
-spring.config.activate.on-profile: production
+spring.config.activate.on-profile: prod

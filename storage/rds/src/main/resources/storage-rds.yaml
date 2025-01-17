@@ -5,7 +5,12 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
+        jdbc.batch_size: 100
         default_batch_fetch_size: 100
+        in_clause_parameter_padding: true
+        order_inserts: true
+        order_updates: true
+        use_sql_comments: true
         format_sql: false
         show_sql: false
 
@@ -15,7 +20,7 @@ spring.config.activate.on-profile: local
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -39,4 +44,4 @@ spring.config.activate.on-profile: dev
 spring.config.activate.on-profile: stage
 
 ---
-spring.config.activate.on-profile: production
+spring.config.activate.on-profile: prod

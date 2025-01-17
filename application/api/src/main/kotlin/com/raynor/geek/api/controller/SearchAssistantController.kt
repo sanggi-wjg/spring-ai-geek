@@ -2,6 +2,7 @@ package com.raynor.geek.api.controller
 
 import com.raynor.geek.api.controller.dto.request.SearchRequestDto
 import com.raynor.geek.api.service.SearchService
+import jakarta.validation.Valid
 import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -16,14 +17,14 @@ class SearchAssistantController(
 
     @PostMapping("")
     fun search(
-        @RequestBody searchRequestDto: SearchRequestDto
+        @RequestBody @Valid searchRequestDto: SearchRequestDto
     ): ChatResponse {
         return searchService.search(searchRequestDto.query)
     }
 
     @PostMapping("/vector")
     fun searchFromVector(
-        @RequestBody searchRequestDto: SearchRequestDto
+        @RequestBody @Valid searchRequestDto: SearchRequestDto
     ): ChatResponse {
         return searchService.searchFromVector(searchRequestDto.query)
     }

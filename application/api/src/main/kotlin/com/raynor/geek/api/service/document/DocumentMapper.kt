@@ -1,4 +1,4 @@
-package com.raynor.geek.api.document
+package com.raynor.geek.api.service.document
 
 import org.springframework.ai.document.Document
 

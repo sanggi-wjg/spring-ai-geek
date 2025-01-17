@@ -1,4 +1,4 @@
-package com.raynor.geek.api.document
+package com.raynor.geek.api.service.document
 
 import com.raynor.geek.api.enum.DocumentMetadata
 import com.raynor.geek.client.tavily.dto.TavilySearchResponseDto

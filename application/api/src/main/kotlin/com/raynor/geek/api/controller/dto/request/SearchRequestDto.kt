@@ -1,8 +1,8 @@
 package com.raynor.geek.api.controller.dto.request
 
-import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotBlank
 
 data class SearchRequestDto(
-    @NotEmpty
+    @field:NotBlank
     val query: String,
 )

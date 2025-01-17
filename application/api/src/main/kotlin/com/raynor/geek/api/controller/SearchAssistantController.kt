@@ -17,14 +17,14 @@ class SearchAssistantController(
 
     @PostMapping("")
     fun search(
-        @RequestBody @Valid searchRequestDto: SearchRequestDto
+        @Valid @RequestBody searchRequestDto: SearchRequestDto
     ): ChatResponse {
         return searchService.search(searchRequestDto.query)
     }
 
     @PostMapping("/vector")
     fun searchFromVector(
-        @RequestBody @Valid searchRequestDto: SearchRequestDto
+        @Valid @RequestBody searchRequestDto: SearchRequestDto
     ): ChatResponse {
         return searchService.searchFromVector(searchRequestDto.query)
     }

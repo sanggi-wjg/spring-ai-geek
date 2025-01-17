@@ -11,5 +11,5 @@ POST http://localhost:8080/search/vector
 Content-Type: application/json
 
 {
-  "query": ""
+  "query": "개발자"
 }

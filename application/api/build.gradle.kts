@@ -1,13 +1,5 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
-extra["springAiVersion"] = "1.0.0-M5"
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
-    }
-}
-
 dependencies {
     implementation(project(":storage:rds"))
     implementation(project(":storage:memorydb"))

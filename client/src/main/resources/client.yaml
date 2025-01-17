@@ -9,6 +9,14 @@ spring.cloud.openfeign:
     max-connections: 2000
     max-connection-per-route: 500
 
+api:
+  tavily:
+    url: https://api.tavily.com
+
+secret:
+  tavily:
+    key: ${TAVILY_API_KEY}
+
 ---
 spring.config.activate.on-profile: local
 

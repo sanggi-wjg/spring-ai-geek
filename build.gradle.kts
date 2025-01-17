@@ -37,6 +37,18 @@ subprojects {
         }
     }
 
+    extra["springAiVersion"] = "1.0.0-M5"
+    extra["springCloudVersion"] = "2024.0.0"
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.ai:spring-ai-bom:${property("springAiVersion")}")
+        }
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        }
+    }
+
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-reflect")
 

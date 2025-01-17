@@ -31,6 +31,8 @@ server:
 spring.config.activate.on-profile: local
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
   ai:
     ollama:
       base-url: http://localhost:11434

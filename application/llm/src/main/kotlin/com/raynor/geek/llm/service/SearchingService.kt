@@ -57,7 +57,7 @@ class SearchingService(
                 "question" to query
             ),
         ).create(
-            OllamaOptionsFactory.ragWithExaone35()
+            OllamaOptionsFactory.exaone35WithTemperatureZero()
         )
         return llm.call(prompt)
     }

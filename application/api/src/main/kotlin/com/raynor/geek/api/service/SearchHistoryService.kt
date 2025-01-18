@@ -16,7 +16,7 @@ class SearchHistoryService(
         condition: SearchHistorySearchCondition,
     ): Page<SearchHistoryEntity> {
         val spec = Specification<SearchHistoryEntity> { root, _, criteriaBuilder ->
-            condition.query.let { criteriaBuilder.like(root.get("query"), "%${condition.query}%") }
+            condition.query?.let { criteriaBuilder.like(root.get("query"), "%${condition.query}%") }
         }
 
         return searchHistoryRdsRepository.findAll(spec, condition.paginationRequest.toPageRequest())

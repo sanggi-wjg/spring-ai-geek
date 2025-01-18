@@ -20,8 +20,6 @@ abstract class PrimaryKey : Persistable<UUID>, Serializable {
 
     override fun getId() = id
 
-    fun getIdString() = id.toString()
-
     override fun isNew() = isNew
 
     override fun hashCode() = Objects.hashCode(id)

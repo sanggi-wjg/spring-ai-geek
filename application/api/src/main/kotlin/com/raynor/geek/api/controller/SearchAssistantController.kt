@@ -1,7 +1,7 @@
 package com.raynor.geek.api.controller
 
 import com.raynor.geek.api.controller.dto.request.SearchRequestDto
-import com.raynor.geek.api.service.SearchService
+import com.raynor.geek.llm.service.SearchService
 import jakarta.validation.Valid
 import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.web.bind.annotation.PostMapping

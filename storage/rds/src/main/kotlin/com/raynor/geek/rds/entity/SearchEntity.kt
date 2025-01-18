@@ -1,6 +1,6 @@
 package com.raynor.geek.rds.entity
 
-import com.raynor.geek.rds.enum.SearchFrom
+import com.raynor.geek.shared.enums.SearchFrom
 import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes

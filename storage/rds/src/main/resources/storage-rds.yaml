@@ -37,6 +37,11 @@ storage:
       pool-name: HikariPool-PostgreSQL
       maximum-pool-size: 5
 
+logging:
+  level:
+    org.hibernate.sql: TRACE
+    org.hibernate.orm.jdbc.bind: TRACE
+
 ---
 spring.config.activate.on-profile: dev
 

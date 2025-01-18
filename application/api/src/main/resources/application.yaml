@@ -8,12 +8,7 @@ spring:
       - storage-rds.yaml
       - storage-memorydb.yaml
       - client.yaml
-  ai:
-    ollama:
-      init:
-        timeout: 5m
-        max-retries: 0
-        pull-model-strategy: never
+      - llm.yaml
   servlet:
     multipart:
       max-file-size: 10MB
@@ -33,21 +28,6 @@ spring.config.activate.on-profile: local
 spring:
   config:
     import: optional:file:.env[.properties]
-  ai:
-    ollama:
-      base-url: http://localhost:11434
-      chat:
-        model: exaone3.5:7.8b
-      embedding:
-        model: mxbai-embed-large:latest
-
-    vectorstore:
-      milvus:
-        client:
-          host: "localhost"
-          port: 19530
-          username: "minioadmin"
-          password: "minioadmin"
 
 logging:
   level:

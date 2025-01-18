@@ -16,10 +16,16 @@ spring.cloud.openfeign:
 api:
   tavily:
     url: https://api.tavily.com
+  naver:
+    url: https://openapi.naver.com
 
 secret:
   tavily:
     key: ${TAVILY_API_KEY}
+  naver:
+    openapi:
+      client-id: ${NAVER_OPEN_API_CLIENT_ID}
+      client-secret: ${NAVER_OPEN_API_CLIENT_SECRET}
 
 ---
 spring.config.activate.on-profile: local

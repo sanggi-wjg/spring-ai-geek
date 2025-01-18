@@ -7,6 +7,8 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 //}
 
 dependencies {
+    implementation(project(":shared"))
+
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     api("org.springframework.boot:spring-boot-starter-data-jpa")
 

@@ -2,9 +2,12 @@ package com.raynor.geek.llm.service
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.raynor.geek.client.naver.NaverOpenClient
+import com.raynor.geek.client.naver.dto.NaverNewsResponseDto
 import com.raynor.geek.client.tavily.TavilyClient
 import com.raynor.geek.client.tavily.dto.TavilySearchResponseDto
 import com.raynor.geek.llm.repository.GeekVectorRepository
+import com.raynor.geek.llm.service.document.NaverNewsDocumentConverter
 import com.raynor.geek.llm.service.document.TavilyDocumentConverter
 import com.raynor.geek.llm.service.document.toPrompt
 import com.raynor.geek.llm.service.factory.OllamaOptionsFactory
@@ -22,11 +25,13 @@ import java.time.Instant
 
 @Service
 class SearchService(
-    private val searchRdsRepository: SearchRdsRepository,
     private val objectMapper: ObjectMapper,
+    private val searchRdsRepository: SearchRdsRepository,
     private val geekVectorRepository: GeekVectorRepository,
     private val tavilyDocumentConverter: TavilyDocumentConverter,
+    private val naverNewsDocumentConverter: NaverNewsDocumentConverter,
     private val tavilyClient: TavilyClient,
+    private val naverOpenClient: NaverOpenClient,
     private val llm: OllamaChatModel,
 ) {
     @Value("classpath:prompts/rag-search-summarize.st")
@@ -34,10 +39,15 @@ class SearchService(
 
     @Transactional
     fun search(query: String): ChatResponse {
-        val searchResponse = tavilyClient.search(query).getOrThrow()
-        saveSearchResponse(searchResponse)
+        val tavilySearchResponse = tavilyClient.search(query).getOrThrow()
+        saveTavilySearchResponse(tavilySearchResponse)
 
-        val documents = tavilyDocumentConverter.convert(searchResponse)
+        val naverSearchResponse = naverOpenClient.searchNews(query).getOrThrow()
+        saveNaverSearchResponse(query, naverSearchResponse)
+
+        val naverDocuments = naverNewsDocumentConverter.convert(naverSearchResponse)
+        val tavilyDocuments = tavilyDocumentConverter.convert(tavilySearchResponse)
+        val documents = naverDocuments + tavilyDocuments
         geekVectorRepository.addDocuments(documents)
 
         val prompt = PromptTemplate(
@@ -62,12 +72,28 @@ class SearchService(
         return llm.call(prompt)
     }
 
-    private fun saveSearchResponse(searchResponse: TavilySearchResponseDto) {
-        searchRdsRepository.save(
+    private fun saveTavilySearchResponse(
+        searchResponse: TavilySearchResponseDto,
+    ): SearchEntity {
+        return searchRdsRepository.save(
             SearchEntity(
                 query = searchResponse.query,
                 responseData = objectMapper.convertValue(searchResponse, object : TypeReference<Map<String, Any>>() {}),
-                searchFrom = SearchFrom.TAVILY,
+                searchFrom = SearchFrom.TAVILY_API,
+                createdAt = Instant.now(),
+            )
+        )
+    }
+
+    private fun saveNaverSearchResponse(
+        query: String,
+        searchResponse: NaverNewsResponseDto,
+    ): SearchEntity {
+        return searchRdsRepository.save(
+            SearchEntity(
+                query = query,
+                responseData = objectMapper.convertValue(searchResponse, object : TypeReference<Map<String, Any>>() {}),
+                searchFrom = SearchFrom.NAVER_OPEN_API,
                 createdAt = Instant.now(),
             )
         )

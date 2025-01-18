@@ -39,8 +39,8 @@ storage:
 
 logging:
   level:
-    org.hibernate.sql: debug
-    org.hibernate.orm.jdbc.bind: trace
+    org.hibernate.sql: TRACE
+    org.hibernate.orm.jdbc.bind: TRACE
 
 ---
 spring.config.activate.on-profile: dev

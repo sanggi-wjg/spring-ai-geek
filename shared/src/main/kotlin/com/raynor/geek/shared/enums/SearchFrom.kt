@@ -1,5 +1,6 @@
 package com.raynor.geek.shared.enums
 
 enum class SearchFrom {
-    TAVILY,
+    TAVILY_API,
+    NAVER_OPEN_API,
 }

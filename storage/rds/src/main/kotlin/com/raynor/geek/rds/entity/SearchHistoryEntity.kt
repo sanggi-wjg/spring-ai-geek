@@ -9,12 +9,12 @@ import java.time.Instant
 
 @Entity
 @Table(
-    name = "search", schema = "public",
+    name = "search_history", schema = "public",
     indexes = [
-        Index(name = "idx_search_001", columnList = "query, search_from"),
+        Index(name = "idx_search_history_001", columnList = "query, search_from"),
     ]
 )
-class SearchEntity(
+class SearchHistoryEntity(
     query: String,
     searchFrom: SearchFrom,
     responseData: Map<String, Any>,

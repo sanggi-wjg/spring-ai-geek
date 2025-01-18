@@ -3,7 +3,7 @@ POST http://localhost:8080/search
 Content-Type: application/json
 
 {
-  "query": "백엔드 개발자"
+  "query": "2024년 백엔드 개발자 채용 통계"
 }
 
 ### 벡터 디비 검색
@@ -11,5 +11,5 @@ POST http://localhost:8080/search/vector
 Content-Type: application/json
 
 {
-  "query": "개발자"
+  "query": "백엔드 개발자 취업"
 }

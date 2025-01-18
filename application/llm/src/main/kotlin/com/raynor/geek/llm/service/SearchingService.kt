@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 
 @Service
-class SearchService(
+class SearchingService(
     private val objectMapper: ObjectMapper,
     private val searchHistoryRdsRepository: SearchHistoryRdsRepository,
     private val geekVectorRepository: GeekVectorRepository,

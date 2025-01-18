@@ -1,9 +1,7 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 dependencies {
-    implementation(project(":shared"))
-
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework:spring-context")
 }
 
 val jar: Jar by tasks

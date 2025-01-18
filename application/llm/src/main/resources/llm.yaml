@@ -1,0 +1,36 @@
+spring:
+  ai:
+    ollama:
+      init:
+        timeout: 5m
+        max-retries: 0
+        pull-model-strategy: never
+
+---
+spring.config.activate.on-profile: local
+
+spring:
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: exaone3.5:7.8b
+      embedding:
+        model: mxbai-embed-large:latest
+
+    vectorstore:
+      milvus:
+        client:
+          host: "localhost"
+          port: 19530
+          username: "minioadmin"
+          password: "minioadmin"
+
+---
+spring.config.activate.on-profile: dev
+
+---
+spring.config.activate.on-profile: stage
+
+---
+spring.config.activate.on-profile: prod

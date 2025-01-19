@@ -7,4 +7,5 @@ include(
     "client",
     "application:llm",
     "application:api",
+    "tests:rest-docs"
 )

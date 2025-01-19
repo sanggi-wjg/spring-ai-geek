@@ -1,5 +1,5 @@
 ### 웹 검색
-POST http://localhost:8080/search
+POST http://localhost:8080/searching-assistant/
 Content-Type: application/json
 
 {
@@ -7,9 +7,18 @@ Content-Type: application/json
 }
 
 ### 벡터 디비 검색
-POST http://localhost:8080/search/vector
+POST http://localhost:8080/searching-assistant/vector
 Content-Type: application/json
 
 {
   "query": "백엔드 개발자 취업"
+}
+
+
+### 글 작성 도우미
+POST http://localhost:8080/writing-assistant
+Content-Type: application/json
+
+{
+  "text": "안녕 오늘 날씨는 좀 구린거 같아."
 }

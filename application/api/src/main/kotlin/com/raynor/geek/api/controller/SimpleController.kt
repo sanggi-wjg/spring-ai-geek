@@ -3,6 +3,7 @@ package com.raynor.geek.api.controller
 import com.raynor.geek.llm.service.ChatSimpleService
 import com.raynor.geek.llm.service.RagSimpleService
 import org.springframework.ai.chat.model.ChatResponse
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -19,7 +20,7 @@ class SimpleController(
         return chatSimpleService.chat()
     }
 
-    @PostMapping("/chat-stream", produces = ["text/event-stream"])
+    @PostMapping("/chat-stream", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chatStream(): Flux<ChatResponse> {
         return chatSimpleService.chatStream()
     }

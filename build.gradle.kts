@@ -1,6 +1,7 @@
 plugins {
     id("org.springframework.boot") version "3.4.1"
     id("io.spring.dependency-management") version "1.1.7"
+//    id("org.asciidoctor.jvm.convert") version "3.3.2"
     kotlin("jvm") version "1.9.25"
     kotlin("kapt") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
@@ -27,6 +28,7 @@ subprojects {
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
+//        plugin("org.asciidoctor.jvm.convert")
     }
 
     java {

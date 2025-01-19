@@ -10,7 +10,7 @@ object OllamaOptionsFactory {
             .model(OllamaMyModel.EXAONE_3_5_8b.value)
             .build()
 
-    fun ragWithExaone35(): OllamaOptions =
+    fun exaone35WithTemperatureZero(): OllamaOptions =
         OllamaOptions.builder()
             .model(OllamaMyModel.EXAONE_3_5_8b.value)
             .temperature(0.0)

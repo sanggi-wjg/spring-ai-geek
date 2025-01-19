@@ -11,8 +11,8 @@ import com.raynor.geek.llm.service.document.NaverNewsDocumentConverter
 import com.raynor.geek.llm.service.document.TavilyDocumentConverter
 import com.raynor.geek.llm.service.document.toPrompt
 import com.raynor.geek.llm.service.factory.OllamaOptionsFactory
-import com.raynor.geek.rds.entity.SearchEntity
-import com.raynor.geek.rds.repository.SearchRdsRepository
+import com.raynor.geek.rds.entity.SearchHistoryEntity
+import com.raynor.geek.rds.repository.SearchHistoryRdsRepository
 import com.raynor.geek.shared.enums.SearchFrom
 import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.ai.chat.prompt.PromptTemplate
@@ -24,9 +24,9 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 
 @Service
-class SearchService(
+class SearchingService(
     private val objectMapper: ObjectMapper,
-    private val searchRdsRepository: SearchRdsRepository,
+    private val searchHistoryRdsRepository: SearchHistoryRdsRepository,
     private val geekVectorRepository: GeekVectorRepository,
     private val tavilyDocumentConverter: TavilyDocumentConverter,
     private val naverNewsDocumentConverter: NaverNewsDocumentConverter,
@@ -57,7 +57,7 @@ class SearchService(
                 "question" to query
             ),
         ).create(
-            OllamaOptionsFactory.ragWithExaone35()
+            OllamaOptionsFactory.exaone35WithTemperatureZero()
         )
         return llm.call(prompt)
     }
@@ -74,9 +74,9 @@ class SearchService(
 
     private fun saveTavilySearchResponse(
         searchResponse: TavilySearchResponseDto,
-    ): SearchEntity {
-        return searchRdsRepository.save(
-            SearchEntity(
+    ): SearchHistoryEntity {
+        return searchHistoryRdsRepository.save(
+            SearchHistoryEntity(
                 query = searchResponse.query,
                 responseData = objectMapper.convertValue(searchResponse, object : TypeReference<Map<String, Any>>() {}),
                 searchFrom = SearchFrom.TAVILY_API,
@@ -88,9 +88,9 @@ class SearchService(
     private fun saveNaverSearchResponse(
         query: String,
         searchResponse: NaverNewsResponseDto,
-    ): SearchEntity {
-        return searchRdsRepository.save(
-            SearchEntity(
+    ): SearchHistoryEntity {
+        return searchHistoryRdsRepository.save(
+            SearchHistoryEntity(
                 query = query,
                 responseData = objectMapper.convertValue(searchResponse, object : TypeReference<Map<String, Any>>() {}),
                 searchFrom = SearchFrom.NAVER_OPEN_API,

@@ -5,7 +5,8 @@ include(
     "storage:rds",
     "storage:memorydb",
     "client",
-    "application:llm",
+    "llm-service",
     "application:api",
+    "application:batch",
     "tests:rest-docs"
 )

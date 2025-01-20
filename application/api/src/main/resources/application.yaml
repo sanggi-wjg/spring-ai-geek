@@ -8,7 +8,7 @@ spring:
       - storage-rds.yaml
       - storage-memorydb.yaml
       - client.yaml
-      - llm.yaml
+      - llm-service.yaml
   servlet:
     multipart:
       max-file-size: 10MB

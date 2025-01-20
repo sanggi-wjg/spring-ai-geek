@@ -1,6 +1,8 @@
 package com.raynor.geek.llm.service
 
-import com.raynor.geek.llm.service.factory.OllamaOptionsFactory
+import com.raynor.geek.llm.model.OllamaLLMArgument
+import com.raynor.geek.llm.service.factory.OllamaFactory
+import com.raynor.geek.shared.enums.OllamaMyModel
 import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.ai.ollama.OllamaChatModel
@@ -15,7 +17,9 @@ class ChatSimpleService(
     fun chat(): ChatResponse {
         val prompt = Prompt(
             "안녕? 자기 소개 해줘",
-            OllamaOptionsFactory.exaone35(),
+            OllamaFactory.create(
+                OllamaLLMArgument(OllamaMyModel.EXAONE_3_5_8b)
+            ),
         )
         return llm.call(prompt)
     }
@@ -23,7 +27,9 @@ class ChatSimpleService(
     fun chatStream(): Flux<ChatResponse> {
         val prompt = Prompt(
             "안녕? 자기 소개 해줘",
-            OllamaOptionsFactory.exaone35(),
+            OllamaFactory.create(
+                OllamaLLMArgument(OllamaMyModel.EXAONE_3_5_8b)
+            ),
         )
         return llm.stream(prompt)
     }

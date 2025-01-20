@@ -2,7 +2,9 @@ package com.raynor.geek.llm.service
 
 import com.raynor.geek.llm.repository.GeekVectorRepository
 import org.springframework.ai.chat.model.ChatResponse
+import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.ai.chat.prompt.PromptTemplate
+import org.springframework.ai.chat.prompt.SystemPromptTemplate
 import org.springframework.ai.ollama.OllamaChatModel
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
@@ -13,22 +15,25 @@ class RagSimpleService(
     private val geekVectorRepository: GeekVectorRepository,
     private val llm: OllamaChatModel,
 ) {
-    @Value("classpath:prompts/qa-1.st")
-    lateinit var qaPrompt: Resource
+    @Value("classpath:prompts/common/system-basic.st")
+    lateinit var systemBasicTemplate: Resource
 
     fun simple(): ChatResponse {
 //        addSimpleDocuments()
         val userInput = "봄비"
         val foundDocuments = geekVectorRepository.similaritySearch(userInput, 3)
 
-        val prompt = PromptTemplate(
-            qaPrompt,
+        val systemPrompt = SystemPromptTemplate(systemBasicTemplate).createMessage()
+        val userPrompt = PromptTemplate(
+            "다음 내용을 요약해줘.",
             mapOf(
                 "documents" to foundDocuments.mapNotNull { it.text }.joinToString("\n"),
                 "question" to userInput
             )
-        ).create()
-        return llm.call(prompt)
+        ).createMessage()
+        return llm.call(
+            Prompt(listOf(systemPrompt, userPrompt))
+        )
     }
 
 //    fun simple2(): ChatResponse {

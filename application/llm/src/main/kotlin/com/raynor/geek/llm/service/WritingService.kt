@@ -1,11 +1,11 @@
 package com.raynor.geek.llm.service
 
-import com.raynor.geek.llm.service.factory.OllamaOptionsFactory
+import com.raynor.geek.llm.model.OllamaLLMArgument
+import com.raynor.geek.llm.service.factory.OllamaFactory
+import com.raynor.geek.llm.service.factory.PromptFactory
+import com.raynor.geek.shared.enums.OllamaMyModel
 import org.slf4j.LoggerFactory
 import org.springframework.ai.chat.model.ChatResponse
-import org.springframework.ai.chat.prompt.Prompt
-import org.springframework.ai.chat.prompt.PromptTemplate
-import org.springframework.ai.chat.prompt.SystemPromptTemplate
 import org.springframework.ai.ollama.OllamaChatModel
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
@@ -25,21 +25,29 @@ class WritingService(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun helpWriting(text: String): ChatResponse {
-        val systemPrompt = SystemPromptTemplate(systemBasicTemplate).createMessage()
-        val userPrompt = PromptTemplate(userBasicTemplate, mapOf("text" to text)).createMessage()
-        val prompt = Prompt(
-            listOf(systemPrompt, userPrompt),
-            OllamaOptionsFactory.exaone35(),
+        val prompt = PromptFactory.create(
+            llmArguments = OllamaFactory.create(
+                OllamaLLMArgument(
+                    OllamaMyModel.EXAONE_3_5_8b,
+                )
+            ),
+            systemResource = systemBasicTemplate,
+            userResource = userBasicTemplate,
+            ragModel = mapOf("text" to text),
         )
         return llm.call(prompt)
     }
 
     fun helpWritingStream(text: String): Flux<ChatResponse> {
-        val systemPrompt = SystemPromptTemplate(systemBasicTemplate).createMessage()
-        val userPrompt = PromptTemplate(userBasicTemplate, mapOf("text" to text)).createMessage()
-        val prompt = Prompt(
-            listOf(systemPrompt, userPrompt),
-            OllamaOptionsFactory.exaone35WithTemperatureZero(),
+        val prompt = PromptFactory.create(
+            llmArguments = OllamaFactory.create(
+                OllamaLLMArgument(
+                    OllamaMyModel.EXAONE_3_5_8b,
+                )
+            ),
+            systemResource = systemBasicTemplate,
+            userResource = userBasicTemplate,
+            ragModel = mapOf("text" to text),
         )
         return llm.stream(prompt)
     }

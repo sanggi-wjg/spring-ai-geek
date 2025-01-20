@@ -6,16 +6,18 @@ import com.raynor.geek.client.naver.NaverOpenClient
 import com.raynor.geek.client.naver.dto.NaverNewsResponseDto
 import com.raynor.geek.client.tavily.TavilyClient
 import com.raynor.geek.client.tavily.dto.TavilySearchResponseDto
+import com.raynor.geek.llm.model.OllamaLLMArgument
 import com.raynor.geek.llm.repository.GeekVectorRepository
 import com.raynor.geek.llm.service.document.NaverNewsDocumentConverter
 import com.raynor.geek.llm.service.document.TavilyDocumentConverter
-import com.raynor.geek.llm.service.document.toPrompt
-import com.raynor.geek.llm.service.factory.OllamaOptionsFactory
+import com.raynor.geek.llm.service.document.toFlattenString
+import com.raynor.geek.llm.service.factory.OllamaFactory
+import com.raynor.geek.llm.service.factory.PromptFactory
 import com.raynor.geek.rds.entity.SearchHistoryEntity
 import com.raynor.geek.rds.repository.SearchHistoryRdsRepository
+import com.raynor.geek.shared.enums.OllamaMyModel
 import com.raynor.geek.shared.enums.SearchFrom
 import org.springframework.ai.chat.model.ChatResponse
-import org.springframework.ai.chat.prompt.PromptTemplate
 import org.springframework.ai.ollama.OllamaChatModel
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
@@ -34,8 +36,11 @@ class SearchingService(
     private val naverOpenClient: NaverOpenClient,
     private val llm: OllamaChatModel,
 ) {
-    @Value("classpath:prompts/rag-search-summarize.st")
-    lateinit var summarizePrompt: Resource
+    @Value("classpath:prompts/searching/system-basic.st")
+    lateinit var systemBasicTemplate: Resource
+
+    @Value("classpath:prompts/searching/user-basic.st")
+    lateinit var userBasicTemplate: Resource
 
     @Transactional
     fun search(query: String): ChatResponse {
@@ -50,25 +55,33 @@ class SearchingService(
         val documents = naverDocuments + tavilyDocuments
         geekVectorRepository.addDocuments(documents)
 
-        val prompt = PromptTemplate(
-            summarizePrompt,
-            mapOf(
-                "documents" to documents.toPrompt(),
-                "question" to query
+        val prompt = PromptFactory.create(
+            llmArguments = OllamaFactory.create(
+                OllamaLLMArgument(
+                    OllamaMyModel.EXAONE_3_5_8b,
+                    temperature = 0.0
+                )
             ),
-        ).create(
-            OllamaOptionsFactory.exaone35WithTemperatureZero()
+            systemResource = systemBasicTemplate,
+            userResource = userBasicTemplate,
+            ragModel = mapOf("documents" to documents.toFlattenString()),
         )
         return llm.call(prompt)
     }
 
     fun searchFromVector(query: String): ChatResponse {
         val documents = geekVectorRepository.similaritySearch(query)
-
-        val prompt = PromptTemplate(
-            summarizePrompt,
-            mapOf("documents" to documents.toPrompt())
-        ).create()
+        val prompt = PromptFactory.create(
+            llmArguments = OllamaFactory.create(
+                OllamaLLMArgument(
+                    OllamaMyModel.EXAONE_3_5_8b,
+                    temperature = 0.0
+                )
+            ),
+            systemResource = systemBasicTemplate,
+            userResource = userBasicTemplate,
+            ragModel = mapOf("documents" to documents.toFlattenString()),
+        )
         return llm.call(prompt)
     }
 

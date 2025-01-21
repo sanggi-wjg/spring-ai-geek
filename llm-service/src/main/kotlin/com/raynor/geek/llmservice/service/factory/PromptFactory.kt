@@ -9,7 +9,7 @@ import org.springframework.core.io.Resource
 object PromptFactory {
 
     fun create(
-        llmArguments: OllamaOptions,
+        ollamaOptions: OllamaOptions,
         systemResource: Resource,
         userResource: Resource,
         ragModel: Map<String, Any>? = null
@@ -21,7 +21,7 @@ object PromptFactory {
 
         return Prompt(
             listOf(systemPrompt, userPrompt),
-            llmArguments,
+            ollamaOptions,
         )
     }
 

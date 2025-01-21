@@ -19,13 +19,13 @@ class SearchingAssistantController(
     fun search(
         @Valid @RequestBody searchRequestDto: SearchRequestDto
     ): ChatResponse {
-        return searchingService.search(searchRequestDto.query)
+        return searchingService.search(searchRequestDto.query, searchRequestDto.llmArgument)
     }
 
     @PostMapping("/vector")
     fun searchFromVector(
         @Valid @RequestBody searchRequestDto: SearchRequestDto
     ): ChatResponse {
-        return searchingService.searchFromVector(searchRequestDto.query)
+        return searchingService.searchFromVector(searchRequestDto.query, searchRequestDto.llmArgument)
     }
 }

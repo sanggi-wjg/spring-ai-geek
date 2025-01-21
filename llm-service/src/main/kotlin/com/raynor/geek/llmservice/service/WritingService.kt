@@ -1,7 +1,7 @@
 package com.raynor.geek.llmservice.service
 
 import com.raynor.geek.llmservice.model.OllamaLLMArgument
-import com.raynor.geek.llmservice.service.factory.OllamaFactory
+import com.raynor.geek.llmservice.service.factory.OllamaOptionFactory
 import com.raynor.geek.llmservice.service.factory.PromptFactory
 import com.raynor.geek.shared.enums.OllamaMyModel
 import org.slf4j.LoggerFactory
@@ -26,7 +26,7 @@ class WritingService(
 
     fun helpWriting(text: String): ChatResponse {
         val prompt = PromptFactory.create(
-            llmArguments = OllamaFactory.create(
+            ollamaOptions = OllamaOptionFactory.create(
                 OllamaLLMArgument(
                     OllamaMyModel.EXAONE_3_5_8b,
                 )
@@ -40,7 +40,7 @@ class WritingService(
 
     fun helpWritingStream(text: String): Flux<ChatResponse> {
         val prompt = PromptFactory.create(
-            llmArguments = OllamaFactory.create(
+            ollamaOptions = OllamaOptionFactory.create(
                 OllamaLLMArgument(
                     OllamaMyModel.EXAONE_3_5_8b,
                 )

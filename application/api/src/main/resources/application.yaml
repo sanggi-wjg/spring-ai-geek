@@ -1,4 +1,4 @@
-spring.application.name: spring-ai-geek
+spring.application.name: spring-ai-geek-api
 spring.profiles.active: local
 spring.web.resources.add-mappings: false
 
@@ -8,7 +8,7 @@ spring:
       - storage-rds.yaml
       - storage-memorydb.yaml
       - client.yaml
-      - llm.yaml
+      - llm-service.yaml
   servlet:
     multipart:
       max-file-size: 10MB
@@ -31,7 +31,7 @@ spring:
 
 logging:
   level:
-    org.springframework: TRACE
+    org.springframework: DEBUG
 
 ---
 spring.config.activate.on-profile: dev

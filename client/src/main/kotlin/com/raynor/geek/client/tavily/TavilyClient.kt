@@ -2,6 +2,7 @@ package com.raynor.geek.client.tavily
 
 import com.raynor.geek.client.tavily.dto.TavilySearchRequestDto
 import com.raynor.geek.client.tavily.dto.TavilySearchResponseDto
+import com.raynor.geek.client.tavily.exception.TavilyAPIException
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component
@@ -15,6 +16,8 @@ class TavilyClient(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun search(query: String): Result<TavilySearchResponseDto> {
+        assert(query.isNotBlank()) { "query must not be blank" }
+
         return runCatching {
             val request = TavilySearchRequestDto(
                 apiKey = tavilyProperty.key,
@@ -25,8 +28,11 @@ class TavilyClient(
             )
             tavilyAPI.search(request)
 
+        }.onSuccess {
+            logger.debug("Tavily api search: {}", it)
         }.onFailure {
             logger.error("Tavily api search failed", it)
+            throw TavilyAPIException(cause = it)
         }
     }
 }

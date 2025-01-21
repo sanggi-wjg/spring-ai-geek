@@ -1,0 +1,34 @@
+spring.application.name: spring-ai-geek-batch
+spring.profiles.active: local
+
+spring:
+  config:
+    import:
+      - storage-rds.yaml
+      - storage-memorydb.yaml
+      - client.yaml
+      - llm-service.yaml
+
+server:
+  port: 8081
+  shutdown: graceful
+
+---
+spring.config.activate.on-profile: local
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+logging:
+  level:
+    org.springframework: DEBUG
+
+---
+spring.config.activate.on-profile: dev
+
+---
+spring.config.activate.on-profile: stage
+
+---
+spring.config.activate.on-profile: prod

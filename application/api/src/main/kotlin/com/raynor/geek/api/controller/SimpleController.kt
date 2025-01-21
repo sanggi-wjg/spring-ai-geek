@@ -1,7 +1,7 @@
 package com.raynor.geek.api.controller
 
-import com.raynor.geek.llm.service.ChatSimpleService
-import com.raynor.geek.llm.service.RagSimpleService
+import com.raynor.geek.llmservice.service.demo.ChatSimpleService
+import com.raynor.geek.llmservice.service.demo.RagSimpleService
 import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping

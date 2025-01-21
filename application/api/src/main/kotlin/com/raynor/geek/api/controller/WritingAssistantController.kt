@@ -1,7 +1,7 @@
 package com.raynor.geek.api.controller
 
 import com.raynor.geek.api.controller.dto.request.WritingRequestDto
-import com.raynor.geek.llm.service.WritingService
+import com.raynor.geek.llmservice.service.WritingService
 import jakarta.validation.Valid
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

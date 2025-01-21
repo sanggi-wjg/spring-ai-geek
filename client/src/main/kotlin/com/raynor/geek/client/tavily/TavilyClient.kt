@@ -2,7 +2,7 @@ package com.raynor.geek.client.tavily
 
 import com.raynor.geek.client.tavily.dto.TavilySearchRequestDto
 import com.raynor.geek.client.tavily.dto.TavilySearchResponseDto
-import com.raynor.geek.client.tavily.exception.TavilyAPISearchException
+import com.raynor.geek.client.tavily.exception.TavilyAPIException
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component
@@ -32,7 +32,7 @@ class TavilyClient(
             logger.debug("Tavily api search: {}", it)
         }.onFailure {
             logger.error("Tavily api search failed", it)
-            throw TavilyAPISearchException(cause = it)
+            throw TavilyAPIException(cause = it)
         }
     }
 }

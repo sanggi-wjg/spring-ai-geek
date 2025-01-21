@@ -1,6 +1,6 @@
 package com.raynor.geek.client.tavily.exception
 
-class TavilyAPISearchException(
-    message: String = "Tavily api search failed",
+class TavilyAPIException(
+    message: String = "Tavily API failed",
     cause: Throwable,
 ) : RuntimeException(message, cause)

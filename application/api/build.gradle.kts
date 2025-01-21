@@ -4,6 +4,7 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":storage:rds"))
     implementation(project(":storage:memorydb"))
+    implementation(project(":client"))
     implementation(project(":llm-service"))
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

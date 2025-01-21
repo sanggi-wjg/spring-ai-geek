@@ -1,7 +1,7 @@
 package com.raynor.geek.client.naver.exception
 
 
-class NaverOpenAPISearchNewsException(
-    message: String = "Naver api search failed",
+class NaverOpenAPIException(
+    message: String = "Naver Open API failed",
     cause: Throwable,
 ) : RuntimeException(message, cause)

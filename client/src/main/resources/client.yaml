@@ -18,6 +18,9 @@ api:
     url: https://api.tavily.com
   naver:
     url: https://openapi.naver.com
+  slack:
+    webhook:
+      own-channel: ${SLACK_WEBHOOK_OWN_CHANNEL}
 
 secret:
   tavily:
@@ -26,6 +29,7 @@ secret:
     openapi:
       client-id: ${NAVER_OPEN_API_CLIENT_ID}
       client-secret: ${NAVER_OPEN_API_CLIENT_SECRET}
+
 
 ---
 spring.config.activate.on-profile: local

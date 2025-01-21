@@ -1,7 +1,7 @@
 package com.raynor.geek.client.naver
 
 import com.raynor.geek.client.naver.dto.NaverNewsResponseDto
-import com.raynor.geek.client.naver.exception.NaverOpenAPISearchNewsException
+import com.raynor.geek.client.naver.exception.NaverOpenAPIException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
@@ -33,7 +33,7 @@ class NaverOpenClient(
             logger.debug("Naver api search: {}", it)
         }.onFailure {
             logger.error("Naver api search failed", it)
-            throw NaverOpenAPISearchNewsException(cause = it)
+            throw NaverOpenAPIException(cause = it)
         }
     }
 }

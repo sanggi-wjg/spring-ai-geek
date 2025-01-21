@@ -1,6 +1,6 @@
 package com.raynor.geek.rds.entity
 
-import com.raynor.geek.shared.enums.SearchFrom
+import com.raynor.geek.shared.enums.SearchAPIType
 import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
@@ -9,14 +9,14 @@ import java.time.Instant
 
 @Entity
 @Table(
-    name = "search_history", schema = "public",
+    name = "search_api_history", schema = "public",
     indexes = [
-        Index(name = "idx_search_history_001", columnList = "query, search_from"),
+        Index(name = "idx_search_api_history_001", columnList = "query, search_api_type"),
     ]
 )
-class SearchHistoryEntity(
+class SearchAPIHistoryEntity(
     query: String,
-    searchFrom: SearchFrom,
+    searchAPIType: SearchAPIType,
     responseData: Map<String, Any>,
     createdAt: Instant,
 ) : PrimaryKey() {
@@ -28,8 +28,8 @@ class SearchHistoryEntity(
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "search_from", nullable = false, length = 64)
-    var searchFrom: SearchFrom = searchFrom
+    @Column(name = "search_api_type", nullable = false, length = 64)
+    var searchAPIType: SearchAPIType = searchAPIType
         private set
 
     @NotNull
@@ -37,7 +37,6 @@ class SearchHistoryEntity(
     @Column(name = "response_data", nullable = false, columnDefinition = "jsonb")
     var responseData: Map<String, Any> = responseData
         private set
-
 
 //    @Column(name = "topic")
 //    var topic: String? = null
@@ -52,22 +51,22 @@ class SearchHistoryEntity(
     var createdAt: Instant = createdAt
         private set
 
-    @NotNull
-    @Column(name = "updated_at", nullable = false)
-    var updatedAt: Instant = createdAt
-        private set
-
-    @Column(name = "deleted_at")
-    var deletedAt: Instant? = null
-        private set
-
-    @NotNull
-    @Column(name = "is_deleted")
-    var isDeleted: Boolean = false
-        private set
-
-    fun delete() {
-        deletedAt = Instant.now()
-        isDeleted = true
-    }
+//    @NotNull
+//    @Column(name = "updated_at", nullable = false)
+//    var updatedAt: Instant = createdAt
+//        private set
+//
+//    @Column(name = "deleted_at")
+//    var deletedAt: Instant? = null
+//        private set
+//
+//    @NotNull
+//    @Column(name = "is_deleted")
+//    var isDeleted: Boolean = false
+//        private set
+//
+//    fun delete() {
+//        deletedAt = Instant.now()
+//        isDeleted = true
+//    }
 }

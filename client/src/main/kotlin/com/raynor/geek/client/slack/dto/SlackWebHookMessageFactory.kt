@@ -13,7 +13,9 @@ object SlackWebHookMessageFactory {
         val formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
         val formattedTime = now.format(formatter)
 
-        val texts = text.split("\n").filter { it.isNotBlank() }
+        val texts = text.split("\n")
+            .filter { it.isNotBlank() }
+            .map { it.replace("**", "*") }
 
         return SlackWebHookRequestDto.builder()
             .addHeader(type = SlackMessageType.PLAIN_TEXT, text = "🤖  AI-Geek NewsLetter  🤖", emoji = true)

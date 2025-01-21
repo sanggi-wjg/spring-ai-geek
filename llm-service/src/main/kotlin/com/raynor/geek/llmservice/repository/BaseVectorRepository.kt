@@ -20,11 +20,13 @@ abstract class BaseVectorRepository(
 
     fun similaritySearch(
         query: String,
-        topK: Int = 5
+        topK: Int = 5,
+        similarityThreshold: Double = 0.8
     ): List<Document> {
         val request = SearchRequest.builder()
             .query(query)
             .topK(topK)
+            .similarityThreshold(0.8)
             .build()
         return vectorStore.similaritySearch(request) ?: emptyList()
     }

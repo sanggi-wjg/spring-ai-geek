@@ -1,8 +1,6 @@
 package com.raynor.geek.client.naver.dto
 
-import com.fasterxml.jackson.annotation.JsonProperty
-
-data class NaverNewsResponseDto(
+data class NaverSearchResponseDto(
     val lastBuildDate: String,
     val total: Int,
     val start: Int,
@@ -11,10 +9,7 @@ data class NaverNewsResponseDto(
 ) {
     data class Item(
         val title: String,
-        @JsonProperty("originallink")
-        val originalLink: String,
         val link: String,
         val description: String,
-        val pubDate: String,
     )
 }

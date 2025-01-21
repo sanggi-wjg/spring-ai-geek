@@ -30,7 +30,7 @@ data class TavilySearchRequestDto(
     val timeRange: String? = null,
 
     /* The maximum number of search results to return. Default is 5. */
-    val maxResults: Int = 10,
+    val maxResults: Int = 5,
 
     /* Include a list of query-related images in the response. Default is False. */
     val includeImages: Boolean? = null,

@@ -15,23 +15,46 @@ class TavilyClient(
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun search(query: String): Result<TavilySearchResponseDto> {
+    fun searchWeb(query: String): Result<TavilySearchResponseDto> {
         assert(query.isNotBlank()) { "query must not be blank" }
 
         return runCatching {
             val request = TavilySearchRequestDto(
                 apiKey = tavilyProperty.key,
                 query = query,
-                maxResults = 10,
+                topic = "general",
+                maxResults = 5,
                 includeImages = false,
                 includeImagesDescriptions = false,
             )
             tavilyAPI.search(request)
 
         }.onSuccess {
-            logger.debug("Tavily api search: {}", it)
+            logger.debug("Tavily api searchWeb: {}", it)
         }.onFailure {
-            logger.error("Tavily api search failed", it)
+            logger.error("Tavily api searchWeb failed", it)
+            throw TavilyAPIException(cause = it)
+        }
+    }
+
+    fun searchNews(query: String): Result<TavilySearchResponseDto> {
+        assert(query.isNotBlank()) { "query must not be blank" }
+
+        return runCatching {
+            val request = TavilySearchRequestDto(
+                apiKey = tavilyProperty.key,
+                query = query,
+                topic = "news",
+                maxResults = 5,
+                includeImages = false,
+                includeImagesDescriptions = false,
+            )
+            tavilyAPI.search(request)
+
+        }.onSuccess {
+            logger.debug("Tavily api searchNews: {}", it)
+        }.onFailure {
+            logger.error("Tavily api searchNews failed", it)
             throw TavilyAPIException(cause = it)
         }
     }

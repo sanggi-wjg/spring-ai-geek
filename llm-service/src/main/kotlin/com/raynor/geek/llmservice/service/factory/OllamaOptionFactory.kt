@@ -13,6 +13,8 @@ object OllamaOptionFactory {
         llmArgument.useNUMA?.let { builder.useNUMA(it) }
         llmArgument.numCtx?.let { builder.numCtx(it) }
         llmArgument.numBatch?.let { builder.numBatch(it) }
+        llmArgument.topP?.let { builder.topP(it) }
+        llmArgument.topK?.let { builder.topK(it) }
 
         return builder.build()
     }

@@ -1,11 +1,11 @@
 package com.raynor.geek.llmservice.service
 
 import com.raynor.geek.llmservice.model.OllamaLLMArgument
+import com.raynor.geek.llmservice.service.demo.EmbedSimpleService
 import com.raynor.geek.llmservice.service.factory.OllamaOptionFactory
 import com.raynor.geek.llmservice.service.factory.PromptFactory
-import com.raynor.geek.shared.enums.OllamaMyModel
-import org.slf4j.LoggerFactory
 import org.springframework.ai.chat.model.ChatResponse
+import org.springframework.ai.chat.prompt.PromptTemplate
 import org.springframework.ai.ollama.OllamaChatModel
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
@@ -13,37 +13,27 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
 @Service
-class WritingService(
+class ChattingService(
     private val llm: OllamaChatModel,
+    private val embedSimpleService: EmbedSimpleService,
 ) {
-    @Value("classpath:prompts/writing/system-basic.st")
+    @Value("classpath:prompts/global/system-basic.st")
     lateinit var systemBasicTemplate: Resource
 
-    @Value("classpath:prompts/writing/user-basic.st")
-    lateinit var userBasicTemplate: Resource
-
-    private val logger = LoggerFactory.getLogger(this::class.java)
-
-    fun helpWriting(text: String): ChatResponse {
+    fun chat(userInput: String, llmArgument: OllamaLLMArgument): ChatResponse {
         val prompt = PromptFactory.create(
-            ollamaOptions = OllamaOptionFactory.create(
-                OllamaLLMArgument(OllamaMyModel.EXAONE_3_5_8b)
-            ),
+            ollamaOptions = OllamaOptionFactory.create(llmArgument),
             systemResource = systemBasicTemplate,
-            userResource = userBasicTemplate,
-            ragModel = mapOf("text" to text),
+            promptTemplate = PromptTemplate(userInput),
         )
         return llm.call(prompt)
     }
 
-    fun helpWritingStream(text: String): Flux<ChatResponse> {
+    fun chatStream(userInput: String, llmArgument: OllamaLLMArgument): Flux<ChatResponse> {
         val prompt = PromptFactory.create(
-            ollamaOptions = OllamaOptionFactory.create(
-                OllamaLLMArgument(OllamaMyModel.EXAONE_3_5_8b)
-            ),
+            ollamaOptions = OllamaOptionFactory.create(llmArgument),
             systemResource = systemBasicTemplate,
-            userResource = userBasicTemplate,
-            ragModel = mapOf("text" to text),
+            promptTemplate = PromptTemplate(userInput),
         )
         return llm.stream(prompt)
     }

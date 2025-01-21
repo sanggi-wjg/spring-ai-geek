@@ -6,6 +6,7 @@ dependencies {
     implementation(project(":storage:memorydb"))
     implementation(project(":client"))
 
+    implementation("org.springframework.boot:spring-boot-starter-aspect")
     api("org.springframework.ai:spring-ai-ollama-spring-boot-starter")
     api("org.springframework.ai:spring-ai-milvus-store-spring-boot-starter")
 }

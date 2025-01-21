@@ -25,6 +25,20 @@ object PromptFactory {
         )
     }
 
+    fun create(
+        ollamaOptions: OllamaOptions,
+        systemResource: Resource,
+        promptTemplate: PromptTemplate,
+    ): Prompt {
+        val systemPrompt = SystemPromptTemplate(systemResource).createMessage()
+
+        return Prompt(
+            listOf(systemPrompt, promptTemplate.createMessage()),
+            ollamaOptions,
+        )
+    }
+
+
     fun createBasicSystemPromptTemplate(): SystemPromptTemplate {
         return SystemPromptTemplate("You are a helpful assistant.")
     }

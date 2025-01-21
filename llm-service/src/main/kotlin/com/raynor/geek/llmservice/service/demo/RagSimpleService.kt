@@ -15,7 +15,7 @@ class RagSimpleService(
     private val geekVectorRepository: GeekVectorRepository,
     private val llm: OllamaChatModel,
 ) {
-    @Value("classpath:prompts/common/system-basic.st")
+    @Value("classpath:prompts/global/system-basic.st")
     lateinit var systemBasicTemplate: Resource
 
     fun simple(): ChatResponse {

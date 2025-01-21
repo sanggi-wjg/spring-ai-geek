@@ -27,16 +27,25 @@ class SearchHistoryEntity(
         private set
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "search_from", nullable = false, length = 64)
+    var searchFrom: SearchFrom = searchFrom
+        private set
+
+    @NotNull
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "response_data", nullable = false, columnDefinition = "jsonb")
     var responseData: Map<String, Any> = responseData
         private set
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "search_from", nullable = false, length = 64)
-    var searchFrom: SearchFrom = searchFrom
-        private set
+
+//    @Column(name = "topic")
+//    var topic: String? = null
+//        private set
+//
+//    @Column(name = "keywords")
+//    var keywords: String? = null
+//        private set
 
     @NotNull
     @Column(name = "created_at", nullable = false)

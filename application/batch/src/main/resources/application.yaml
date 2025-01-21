@@ -1,6 +1,5 @@
-spring.application.name: spring-ai-geek-api
+spring.application.name: spring-ai-geek-batch
 spring.profiles.active: local
-spring.web.resources.add-mappings: false
 
 spring:
   config:
@@ -9,18 +8,10 @@ spring:
       - storage-memorydb.yaml
       - client.yaml
       - llm-service.yaml
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
 
 server:
+  port: 8081
   shutdown: graceful
-  compression:
-    enabled: true
-    mime-types: application/json,application/xml,text/html,text/xml,text/plain
-    min-response-size: 2KB
-    excluded-user-agents: MSIE 6.0,UCBrowser
 
 ---
 spring.config.activate.on-profile: local
@@ -31,7 +22,7 @@ spring:
 
 logging:
   level:
-    org.springframework: TRACE
+    org.springframework: DEBUG
 
 ---
 spring.config.activate.on-profile: dev

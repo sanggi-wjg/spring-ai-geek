@@ -1,7 +1,7 @@
 package com.raynor.geek.api.service
 
 import com.raynor.geek.rds.condition.SearchHistorySearchCondition
-import com.raynor.geek.rds.entity.SearchHistoryEntity
+import com.raynor.geek.rds.entity.SearchAPIHistoryEntity
 import com.raynor.geek.rds.repository.SearchHistoryRdsRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.jpa.domain.Specification
@@ -14,8 +14,8 @@ class SearchHistoryService(
 
     fun getSearchHistories(
         condition: SearchHistorySearchCondition,
-    ): Page<SearchHistoryEntity> {
-        val spec = Specification<SearchHistoryEntity> { root, _, criteriaBuilder ->
+    ): Page<SearchAPIHistoryEntity> {
+        val spec = Specification<SearchAPIHistoryEntity> { root, _, criteriaBuilder ->
             condition.query?.let { criteriaBuilder.like(root.get("query"), "%${condition.query}%") }
         }
 

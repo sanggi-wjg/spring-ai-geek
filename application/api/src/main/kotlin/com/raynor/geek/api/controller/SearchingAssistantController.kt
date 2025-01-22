@@ -15,17 +15,24 @@ class SearchingAssistantController(
     private val searchingService: SearchingService,
 ) {
 
-    @PostMapping("")
-    fun search(
+    @PostMapping("/web")
+    fun searchWeb(
         @Valid @RequestBody searchRequestDto: SearchRequestDto
     ): ChatResponse {
-        return searchingService.search(searchRequestDto.query, searchRequestDto.llmArgument)
+        return searchingService.searchWeb(searchRequestDto.query, searchRequestDto.llmArgument)
+    }
+
+    @PostMapping("/news")
+    fun searchNews(
+        @Valid @RequestBody searchRequestDto: SearchRequestDto
+    ): ChatResponse {
+        return searchingService.searchNews(searchRequestDto.query, searchRequestDto.llmArgument)
     }
 
     @PostMapping("/vector")
-    fun searchFromVector(
+    fun searchVector(
         @Valid @RequestBody searchRequestDto: SearchRequestDto
     ): ChatResponse {
-        return searchingService.searchFromVector(searchRequestDto.query, searchRequestDto.llmArgument)
+        return searchingService.searchVector(searchRequestDto.query, searchRequestDto.llmArgument)
     }
 }

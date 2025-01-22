@@ -1,6 +1,7 @@
 package com.raynor.geek.client.naver
 
 import com.raynor.geek.client.naver.dto.NaverNewsResponseDto
+import com.raynor.geek.client.naver.dto.NaverSearchResponseDto
 import com.raynor.geek.client.naver.exception.NaverOpenAPIException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -12,9 +13,32 @@ class NaverOpenClient(
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
+    fun searchWeb(
+        query: String,
+        display: Int = 5,
+        start: Int = 1,
+    ): Result<NaverSearchResponseDto> {
+        assert(query.isNotBlank()) { "query must not be blank" }
+        assert(display in 10..100) { "display must be between 10 and 100" }
+        assert(start in 1..100) { "start must be between 1 and 100" }
+
+        return runCatching {
+            naverOpenAPI.searchGeneral(
+                clientId = naverOpenAPIProperty.clientId,
+                clientSecret = naverOpenAPIProperty.clientSecret,
+                query = query
+            )
+        }.onSuccess {
+            logger.debug("Naver api searchWeb: {}", it)
+        }.onFailure {
+            logger.error("Naver api searchWeb failed", it)
+            throw NaverOpenAPIException(cause = it)
+        }
+    }
+
     fun searchNews(
         query: String,
-        display: Int = 10,
+        display: Int = 5,
         start: Int = 1,
         sort: String = "sim",
     ): Result<NaverNewsResponseDto> {
@@ -30,9 +54,9 @@ class NaverOpenClient(
                 query = query
             )
         }.onSuccess {
-            logger.debug("Naver api search: {}", it)
+            logger.debug("Naver api searchNews: {}", it)
         }.onFailure {
-            logger.error("Naver api search failed", it)
+            logger.error("Naver api searchNews failed", it)
             throw NaverOpenAPIException(cause = it)
         }
     }

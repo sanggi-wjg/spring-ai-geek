@@ -21,7 +21,7 @@ class KeywordSearchingScheduler(
     fun run() {
         logger.info("[SearchHistoryScheduler] Start")
 
-        val chatResponse = searchingService.search(
+        val chatResponse = searchingService.searchWeb(
             query = "애플 주식",
             llmArgument = OllamaLLMArgument(model = OllamaMyModel.EXAONE_3_5_8b, temperature = 0.1)
         )

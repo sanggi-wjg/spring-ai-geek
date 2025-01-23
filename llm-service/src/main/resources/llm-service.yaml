@@ -28,7 +28,7 @@ spring:
 
 logging:
   level:
-    org.springframework.ai: INFO
+    org.springframework.ai: DEBUG
 
 ---
 spring.config.activate.on-profile: dev

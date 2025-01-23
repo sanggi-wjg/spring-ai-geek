@@ -16,34 +16,45 @@ import reactor.core.publisher.Flux
 @Service
 class ChattingService(
     private val chatClientBuilder: ChatClient.Builder,
+//    private val llm: OllamaChatModel,
+//    private val repository: ConversationHistoryRdsRepository,
 ) {
     @Value("classpath:prompts/global/system-basic.st")
     lateinit var systemBasicTemplate: Resource
 
-
-    fun chat(userInput: String, llmArgument: OllamaLLMArgument): ChatResponse {
+    fun chat(
+        userInput: String,
+        conversationId: String,
+        llmArgument: OllamaLLMArgument
+    ): ChatResponse {
         val prompt = PromptFactory.create(
             ollamaOptions = OllamaOptionFactory.create(llmArgument),
             systemResource = systemBasicTemplate,
             promptTemplate = PromptTemplate(userInput),
         )
-
+//        return ChatClient.builder(llm)
         return chatClientBuilder
             .defaultAdvisors(
-                MessageChatMemoryAdvisor(InMemoryChatMemory(), "uniqueId", 50)
+//                MessageChatMemoryAdvisor(RdsChatMemory(repository), conversationId, 50)
+                MessageChatMemoryAdvisor(InMemoryChatMemory(), conversationId, 50)
             )
             .build().prompt(prompt).call().chatResponse()!!
     }
 
-    fun chatStream(userInput: String, llmArgument: OllamaLLMArgument): Flux<ChatResponse> {
+    fun chatStream(
+        userInput: String,
+        conversationId: String,
+        llmArgument: OllamaLLMArgument
+    ): Flux<ChatResponse> {
         val prompt = PromptFactory.create(
             ollamaOptions = OllamaOptionFactory.create(llmArgument),
             systemResource = systemBasicTemplate,
             promptTemplate = PromptTemplate(userInput),
         )
+//        return ChatClient.builder(llm)
         return chatClientBuilder
             .defaultAdvisors(
-                MessageChatMemoryAdvisor(InMemoryChatMemory(), "uniqueId", 50)
+                MessageChatMemoryAdvisor(InMemoryChatMemory(), conversationId, 50)
             )
             .build().prompt(prompt).stream().chatResponse()
     }

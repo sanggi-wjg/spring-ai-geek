@@ -18,14 +18,22 @@ class ChatController(
     fun chat(
         @Valid @RequestBody chatRequestDto: ChatRequestDto,
     ): ChatResponse {
-        return chattingService.chat(chatRequestDto.userInput, chatRequestDto.llmArgument)
+        return chattingService.chat(
+            chatRequestDto.userInput,
+            chatRequestDto.conversationId,
+            chatRequestDto.llmArgument,
+        )
     }
 
     @PostMapping("/chat-stream", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun chatStream(
         @Valid @RequestBody chatRequestDto: ChatRequestDto,
     ): Flux<String> {
-        return chattingService.chatStream(chatRequestDto.userInput, chatRequestDto.llmArgument).map {
+        return chattingService.chatStream(
+            chatRequestDto.userInput,
+            chatRequestDto.conversationId,
+            chatRequestDto.llmArgument,
+        ).map {
             it.results.first().output.text
         }
     }

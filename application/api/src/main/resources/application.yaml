@@ -15,6 +15,7 @@ spring:
       max-request-size: 10MB
 
 server:
+  port: 8090
   shutdown: graceful
   compression:
     enabled: true

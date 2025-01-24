@@ -14,19 +14,23 @@ class MilvusConfig {
 
     companion object {
         const val DEFAULT_DATABASE = "default"
-        const val GEEK_STORE = "geek_store"
+        const val GEEK_COLLECTION = "geek"
     }
 
-    @Bean(GEEK_STORE)
+    @Bean(GEEK_COLLECTION)
     fun vectorStore(
         milvusClient: MilvusServiceClient,
         embeddingModel: EmbeddingModel,
     ): VectorStore {
         return MilvusVectorStore.builder(milvusClient, embeddingModel)
             .databaseName(DEFAULT_DATABASE)
-            .collectionName(GEEK_STORE)
+            .collectionName(GEEK_COLLECTION)
             .initializeSchema(true)
-            .autoId(true)
+            .autoId(false)
+            .iDFieldName("doc_id")
+            .contentFieldName("content")
+            .metadataFieldName("metadata")
+            .embeddingFieldName("embedding")
             .embeddingDimension(1024)
             .indexType(IndexType.IVF_FLAT)
             .metricType(MetricType.COSINE)

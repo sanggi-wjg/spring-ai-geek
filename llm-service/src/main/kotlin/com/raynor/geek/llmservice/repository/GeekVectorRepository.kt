@@ -7,5 +7,5 @@ import org.springframework.beans.factory.annotation.Qualifier
 
 @VectorRepository
 class GeekVectorRepository(
-    @Qualifier(MilvusConfig.GEEK_STORE) private val vectorStore: VectorStore
+    @Qualifier(MilvusConfig.GEEK_COLLECTION) private val vectorStore: VectorStore
 ) : BaseVectorRepository(vectorStore)

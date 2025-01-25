@@ -29,7 +29,7 @@ class ChattingService(
         llmParameter: LlmParameter
     ): String {
         val prompt = PromptFactory.create(
-            ollamaOptions = llmParameter.toOllamaOptions(),
+            ollamaOptions = llmParameter.toOllamaOptions(withTool = true),
             systemResource = systemBasicTemplate,
             promptTemplate = PromptTemplate(userInput),
         )

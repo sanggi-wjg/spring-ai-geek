@@ -5,4 +5,4 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableFeignClients(basePackages = ["com.raynor.geek.client"])
-class OpenFeignConfig
+class FeignConfig

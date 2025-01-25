@@ -11,9 +11,9 @@ import java.time.Instant
     indexes = [
         Index(name = "idx_conversation_history_001", columnList = "conversation_id"),
     ],
-    uniqueConstraints = [
-        UniqueConstraint(name = "unq_conversation_history_001", columnNames = ["conversation_id"]),
-    ]
+//    uniqueConstraints = [
+//        UniqueConstraint(name = "unq_conversation_history_001", columnNames = ["conversation_id"]),
+//    ]
 )
 class ConversationHistoryEntity(
     conversationId: String,
@@ -23,7 +23,7 @@ class ConversationHistoryEntity(
 ) : PrimaryKey() {
 
     @NotNull
-    @Column(name = "conversation_id", nullable = false, length = 256, unique = true)
+    @Column(name = "conversation_id", nullable = false, length = 256)
     var conversationId: String = conversationId
         private set
 

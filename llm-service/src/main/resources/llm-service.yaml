@@ -28,7 +28,8 @@ spring:
 
 logging:
   level:
-    org.springframework.ai: INFO
+    org.springframework.ai: DEBUG
+    org.springframework.ai.chat.metadata.ChatResponseMetadata: INFO
 
 ---
 spring.config.activate.on-profile: dev

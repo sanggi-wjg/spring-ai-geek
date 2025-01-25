@@ -10,7 +10,7 @@ spring:
       - llm-service.yaml
 
 server:
-  port: 8081
+  port: 8091
   shutdown: graceful
 
 ---

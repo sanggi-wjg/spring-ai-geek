@@ -1,16 +1,16 @@
 package com.raynor.geek.rds.entity
 
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Index
+import jakarta.persistence.Table
 import org.jetbrains.annotations.NotNull
 
 @Entity
 @Table(
     name = "keyword", schema = "public",
     indexes = [
-        Index(name = "idx_keyword_001", columnList = "keyword")
-    ],
-    uniqueConstraints = [
-        UniqueConstraint(name = "unq_keyword_001", columnNames = ["keyword"]),
+        Index(name = "idx_keyword_001", columnList = "keyword", unique = true)
     ],
 )
 class KeywordEntity(
@@ -18,7 +18,7 @@ class KeywordEntity(
 ) : PrimaryKey() {
 
     @NotNull
-    @Column(name = "keyword", nullable = false, length = 64)
+    @Column(name = "keyword", nullable = false, length = 64, unique = true)
     var keyword: String = keyword
         private set
 }

@@ -1,9 +1,9 @@
 package com.raynor.geek.llmservice.service
 
-import com.raynor.geek.llmservice.model.OllamaLLMArgument
-import com.raynor.geek.llmservice.service.factory.OllamaOptionFactory
+import com.raynor.geek.llmservice.model.LlmParameter
+import com.raynor.geek.llmservice.model.toOllamaOptions
 import com.raynor.geek.llmservice.service.factory.PromptFactory
-import com.raynor.geek.shared.enums.OllamaMyModel
+import com.raynor.geek.shared.enums.OllamaCustomModel
 import org.slf4j.LoggerFactory
 import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.ai.ollama.OllamaChatModel
@@ -26,9 +26,7 @@ class WritingService(
 
     fun helpWriting(text: String): ChatResponse {
         val prompt = PromptFactory.create(
-            ollamaOptions = OllamaOptionFactory.create(
-                OllamaLLMArgument(OllamaMyModel.EXAONE_3_5_8b)
-            ),
+            ollamaOptions = LlmParameter(OllamaCustomModel.EXAONE_3_5_8b).toOllamaOptions(),
             systemResource = systemBasicTemplate,
             userResource = userBasicTemplate,
             ragModel = mapOf("text" to text),
@@ -38,9 +36,7 @@ class WritingService(
 
     fun helpWritingStream(text: String): Flux<ChatResponse> {
         val prompt = PromptFactory.create(
-            ollamaOptions = OllamaOptionFactory.create(
-                OllamaLLMArgument(OllamaMyModel.EXAONE_3_5_8b)
-            ),
+            ollamaOptions = LlmParameter(OllamaCustomModel.EXAONE_3_5_8b).toOllamaOptions(),
             systemResource = systemBasicTemplate,
             userResource = userBasicTemplate,
             ragModel = mapOf("text" to text),

@@ -1,10 +1,11 @@
 package com.raynor.geek.llmservice.model
 
-import com.raynor.geek.shared.enums.OllamaMyModel
+import com.raynor.geek.shared.enums.OllamaCustomModel
+import org.springframework.ai.ollama.api.OllamaOptions
 
-data class OllamaLLMArgument(
+data class LlmParameter(
     // See: https://github.com/ggerganov/llama.cpp/blob/master/examples/main/README.md
-    val model: OllamaMyModel,
+    val model: OllamaCustomModel,
 
     /**
      * Indicates whether NUMA (Non-Uniform Memory Access) is enabled.
@@ -166,3 +167,17 @@ data class OllamaLLMArgument(
      */
     val truncate: Boolean? = null
 )
+
+fun LlmParameter.toOllamaOptions(): OllamaOptions {
+    val builder = OllamaOptions.builder()
+        .model(this.model.id)
+
+    this.temperature?.let { builder.temperature(it) }
+    this.useNUMA?.let { builder.useNUMA(it) }
+    this.numCtx?.let { builder.numCtx(it) }
+    this.numBatch?.let { builder.numBatch(it) }
+    this.topP?.let { builder.topP(it) }
+    this.topK?.let { builder.topK(it) }
+
+    return builder.build()
+}

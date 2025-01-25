@@ -3,8 +3,8 @@ package com.raynor.geek.api.controller
 import com.raynor.geek.api.controller.dto.request.ChatRequestDto
 import com.raynor.geek.llmservice.service.ChattingService
 import jakarta.validation.Valid
-import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -17,12 +17,14 @@ class ChatController(
     @PostMapping("/chat")
     fun chat(
         @Valid @RequestBody chatRequestDto: ChatRequestDto,
-    ): ChatResponse {
+    ): ResponseEntity<String> {
         return chattingService.chat(
             chatRequestDto.userInput,
             chatRequestDto.conversationId,
-            chatRequestDto.llmArgument,
-        )
+            chatRequestDto.llmParameter,
+        ).let {
+            ResponseEntity.ok(it)
+        }
     }
 
     @PostMapping("/chat-stream", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
@@ -32,9 +34,9 @@ class ChatController(
         return chattingService.chatStream(
             chatRequestDto.userInput,
             chatRequestDto.conversationId,
-            chatRequestDto.llmArgument,
+            chatRequestDto.llmParameter,
         ).map {
-            it.results.first().output.text
+            it
         }
     }
 }

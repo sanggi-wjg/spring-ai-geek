@@ -1,10 +1,10 @@
 package com.raynor.geek.llmservice.service
 
-import com.raynor.geek.llmservice.model.OllamaLLMArgument
+import com.raynor.geek.llmservice.model.LlmParameter
+import com.raynor.geek.llmservice.model.toOllamaOptions
 import com.raynor.geek.llmservice.repository.GeekVectorRepository
 import com.raynor.geek.llmservice.service.document.toDocument
 import com.raynor.geek.llmservice.service.document.toFlattenString
-import com.raynor.geek.llmservice.service.factory.OllamaOptionFactory
 import com.raynor.geek.llmservice.service.factory.PromptFactory
 import com.raynor.geek.rds.repository.DocumentRdsRepository
 import org.springframework.ai.chat.model.ChatResponse
@@ -29,7 +29,7 @@ class SearchingService(
     lateinit var userBasicTemplate: Resource
 
     @Transactional
-    fun searchWeb(query: String, llmArgument: OllamaLLMArgument): ChatResponse {
+    fun searchWeb(query: String, llmParameter: LlmParameter): ChatResponse {
         val documents = tavilyDocumentService.loadWeb(query).let {
             documentRdsRepository.saveAll(it).toDocument()
         } + naverDocumentService.loadWeb(query).let {
@@ -38,7 +38,7 @@ class SearchingService(
         geekVectorRepository.addDocuments(documents)
 
         val prompt = PromptFactory.create(
-            ollamaOptions = OllamaOptionFactory.create(llmArgument),
+            ollamaOptions = llmParameter.toOllamaOptions(),
             systemResource = systemBasicTemplate,
             userResource = userBasicTemplate,
             ragModel = mapOf("documents" to documents.toFlattenString()),
@@ -47,7 +47,7 @@ class SearchingService(
     }
 
     @Transactional
-    fun searchNews(query: String, llmArgument: OllamaLLMArgument): ChatResponse {
+    fun searchNews(query: String, llmParameter: LlmParameter): ChatResponse {
         val documents = tavilyDocumentService.loadNews(query).let {
             documentRdsRepository.saveAll(it).toDocument()
         } + naverDocumentService.loadNews(query).let {
@@ -56,7 +56,7 @@ class SearchingService(
         geekVectorRepository.addDocuments(documents)
 
         val prompt = PromptFactory.create(
-            ollamaOptions = OllamaOptionFactory.create(llmArgument),
+            ollamaOptions = llmParameter.toOllamaOptions(),
             systemResource = systemBasicTemplate,
             userResource = userBasicTemplate,
             ragModel = mapOf("documents" to documents.toFlattenString()),
@@ -64,10 +64,10 @@ class SearchingService(
         return llm.call(prompt)
     }
 
-    fun searchVector(query: String, llmArgument: OllamaLLMArgument): ChatResponse {
+    fun searchVector(query: String, llmParameter: LlmParameter): ChatResponse {
         val documents = geekVectorRepository.similaritySearch(query, topK = 5)
         val prompt = PromptFactory.create(
-            ollamaOptions = OllamaOptionFactory.create(llmArgument),
+            ollamaOptions = llmParameter.toOllamaOptions(),
             systemResource = systemBasicTemplate,
             userResource = userBasicTemplate,
             ragModel = mapOf("documents" to documents.toFlattenString()),

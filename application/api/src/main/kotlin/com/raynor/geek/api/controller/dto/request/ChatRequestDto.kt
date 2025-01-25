@@ -1,6 +1,6 @@
 package com.raynor.geek.api.controller.dto.request
 
-import com.raynor.geek.llmservice.model.OllamaLLMArgument
+import com.raynor.geek.llmservice.model.LlmParameter
 import jakarta.validation.constraints.NotBlank
 import java.util.*
 
@@ -9,5 +9,5 @@ data class ChatRequestDto(
     val userInput: String,
     @field:NotBlank
     val conversationId: String = UUID.randomUUID().toString(),
-    val llmArgument: OllamaLLMArgument,
+    val llmParameter: LlmParameter,
 )

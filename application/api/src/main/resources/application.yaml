@@ -32,7 +32,11 @@ spring:
 
 logging:
   level:
-    org.springframework: INFO
+    #    org.springframework: DEBUG
+    org.springframework.ai: TRACE
+    org.springframework.web: TRACE
+    org.hibernate.sql: TRACE
+    org.hibernate.orm.jdbc.bind: TRACE
 
 ---
 spring.config.activate.on-profile: dev

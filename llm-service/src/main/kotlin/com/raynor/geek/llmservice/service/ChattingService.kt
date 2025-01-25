@@ -17,7 +17,6 @@ import reactor.core.publisher.Flux
 
 @Service
 class ChattingService(
-//    private val chatClientBuilder: ChatClient.Builder,
     private val chatModel: OllamaChatModel,
     private val repository: ConversationHistoryRdsRepository,
 ) {
@@ -34,13 +33,11 @@ class ChattingService(
             systemResource = systemBasicTemplate,
             promptTemplate = PromptTemplate(userInput),
         )
-//        return chatClientBuilder
         return ChatClient.builder(chatModel)
             .defaultAdvisors(
                 MessageChatMemoryAdvisor(RdsChatMemory(repository), conversationId, 50)
 //                MessageChatMemoryAdvisor(InMemoryChatMemory(), conversationId, 50)
-            )
-            .build().prompt(prompt).call()
+            ).build().prompt(prompt).call()
             .chatResponse()!!.results.first().output.text
     }
 
@@ -73,7 +70,6 @@ class ChattingService(
             systemResource = systemBasicTemplate,
             promptTemplate = PromptTemplate(userInput),
         )
-//        return ChatClient.builder(llm)
         return ChatClient.builder(chatModel)
             .defaultAdvisors(
                 MessageChatMemoryAdvisor(InMemoryChatMemory(), conversationId, 50)

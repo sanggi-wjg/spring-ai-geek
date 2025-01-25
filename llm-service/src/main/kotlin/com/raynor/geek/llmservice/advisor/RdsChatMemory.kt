@@ -37,15 +37,6 @@ class RdsChatMemory(
     }
 
     override fun get(conversationId: String, lastN: Int): List<Message> {
-//        return repository.findFirstByConversationIdOrderByIdDesc(conversationId)?.let {
-//            listOf(
-//                when (it.messageType) {
-//                    ConversationMessageType.SYSTEM -> SystemMessage(it.message)
-//                    ConversationMessageType.USER -> UserMessage(it.message)
-//                    ConversationMessageType.ASSISTANT -> AssistantMessage(it.message)
-//                }
-//            )
-//        } ?: emptyList()
         return repository.findByConversationIdOrderByCreatedAt(conversationId, Limit.of(lastN)).map {
             when (it.messageType) {
                 ConversationMessageType.SYSTEM -> SystemMessage(it.message)

@@ -1,5 +1,6 @@
 package com.raynor.geek.llmservice.model
 
+import com.raynor.geek.llmservice.config.ToolConfig
 import com.raynor.geek.shared.enums.OllamaCustomModel
 import org.springframework.ai.ollama.api.OllamaOptions
 
@@ -168,16 +169,28 @@ data class LlmParameter(
     val truncate: Boolean? = null
 )
 
-fun LlmParameter.toOllamaOptions(): OllamaOptions {
+fun LlmParameter.toOllamaOptions(withTool: Boolean = false): OllamaOptions {
     val builder = OllamaOptions.builder()
         .model(this.model.id)
 
-    this.temperature?.let { builder.temperature(it) }
-    this.useNUMA?.let { builder.useNUMA(it) }
-    this.numCtx?.let { builder.numCtx(it) }
-    this.numBatch?.let { builder.numBatch(it) }
-    this.topP?.let { builder.topP(it) }
-    this.topK?.let { builder.topK(it) }
+    this.temperature?.also { builder.temperature(it) }
+    this.useNUMA?.also { builder.useNUMA(it) }
+    this.numCtx?.also { builder.numCtx(it) }
+    this.numBatch?.also { builder.numBatch(it) }
+    this.topP?.also { builder.topP(it) }
+    this.topK?.also { builder.topK(it) }
+
+    withTool.takeIf { it }.also {
+        assert(this.model != OllamaCustomModel.LLAMA_3_1_8b) { "Model does not support tools except llama." }
+        
+        builder.functions(
+            setOf(
+                ToolConfig.TOOL_WEATHER,
+                ToolConfig.TOOL_SEARCH_WEB,
+                ToolConfig.TOOL_SEARCH_NEWS,
+            )
+        )
+    }
 
     return builder.build()
 }

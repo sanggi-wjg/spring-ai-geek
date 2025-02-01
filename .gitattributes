@@ -3,4 +3,4 @@
 *.jar binary
 
 special-vendored-path/* linguist-vendored
-*.ipynb linguist-vendored
+dataflow/**.ipynb linguist-vendored

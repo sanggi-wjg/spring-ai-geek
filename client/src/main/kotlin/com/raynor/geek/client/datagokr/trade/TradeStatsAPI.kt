@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(value = "datagokr-trade-stats", url = "\${api.datagokr.trade-stats.url}")
 interface TradeStatsAPI {
+    // https://www.data.go.kr/data/15100475/openapi.do
 
     @RequestMapping(
         method = [RequestMethod.GET],

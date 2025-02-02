@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull
     name = "country", schema = "public",
     uniqueConstraints = [
         UniqueConstraint(name = "unq_country_001", columnNames = ["code"]),
+        UniqueConstraint(name = "unq_country_002", columnNames = ["alpha2"]),
     ]
 )
 class CountryEntity(
@@ -26,13 +27,12 @@ class CountryEntity(
         private set
 
     @NotNull
-    @Column(name = "code", nullable = false, length = 3, unique = true, updatable = false)
+    @Column(name = "code", nullable = false, length = 3, updatable = false)
     var code: String = code
         private set
 
     @NotNull
-    @Column(name = "aplha2", nullable = false, length = 2, unique = true, updatable = false)
+    @Column(name = "aplha2", nullable = false, length = 2, updatable = false)
     var alpha2: String = alpha2
         private set
-
 }

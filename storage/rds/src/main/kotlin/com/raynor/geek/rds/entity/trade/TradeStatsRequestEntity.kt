@@ -16,7 +16,7 @@ import java.time.Instant
     ]
 )
 class TradeStatsRequestEntity(
-    countryCode: CountryEntity,
+    country: CountryEntity,
     startMonth: String,
     endMonth: String,
     createdAt: Instant,
@@ -24,7 +24,7 @@ class TradeStatsRequestEntity(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false, updatable = false)
-    var countryEntity: CountryEntity = countryCode
+    var country: CountryEntity = country
         private set
 
     @NotNull
@@ -47,9 +47,8 @@ class TradeStatsRequestEntity(
     var isPulled: Boolean = false
         private set
 
-    @NotNull
-    @Column(name = "pulled_at", nullable = false)
-    var pulledAt: Instant = createdAt
+    @Column(name = "pulled_at", insertable = false)
+    var pulledAt: Instant? = null
         private set
 
     fun pulled() {

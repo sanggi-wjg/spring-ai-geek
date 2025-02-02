@@ -22,3 +22,8 @@ Content-Type: application/json
 {
   "text": "안녕 오늘 날씨는 좀 구린거 같아."
 }
+
+### Trade Stats Requests
+GET localhost:8090/api/v1/trade-stats-requests?page=1
+Content-Type: application/json
+

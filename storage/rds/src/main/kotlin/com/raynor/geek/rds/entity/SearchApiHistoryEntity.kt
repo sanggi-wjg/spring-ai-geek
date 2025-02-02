@@ -14,7 +14,7 @@ import java.time.Instant
         Index(name = "idx_search_api_history_001", columnList = "query, search_api_type"),
     ]
 )
-class SearchAPIHistoryEntity(
+class SearchApiHistoryEntity(
     query: String,
     searchAPIType: SearchAPIType,
     responseData: Map<String, Any>,

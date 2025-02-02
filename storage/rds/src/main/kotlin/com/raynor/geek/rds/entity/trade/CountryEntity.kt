@@ -32,7 +32,7 @@ class CountryEntity(
         private set
 
     @NotNull
-    @Column(name = "aplha2", nullable = false, length = 2, updatable = false)
+    @Column(name = "alpha2", nullable = false, length = 2, updatable = false)
     var alpha2: String = alpha2
         private set
 }

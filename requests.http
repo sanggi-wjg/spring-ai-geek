@@ -23,6 +23,13 @@ Content-Type: application/json
   "text": "안녕 오늘 날씨는 좀 구린거 같아."
 }
 
+
+### Countires
+#GET localhost:8090/api/v1/countries?page=5&size=20&sortBy=name&sortDirection=ASC
+GET localhost:8090/api/v1/countries?page=0&size=20&sortBy=name&sortDirection=ASC&code=410&alpha2=KR&name=Korea
+Content-Type: application/json
+
+
 ### Trade Stats Requests
 GET localhost:8090/api/v1/trade-stats-requests?page=1
 Content-Type: application/json

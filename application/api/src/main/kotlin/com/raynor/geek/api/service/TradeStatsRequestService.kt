@@ -23,6 +23,8 @@ class TradeStatsRequestService(
 //            condition.countryAlpha2Code?.let { criteriaBuilder.equal(root.get("countryAlpha2Code"), condition.countryAlpha2Code) }
 //        }
 
-        return tradeStatsRequestRdsRepository.findAllWithCountry(condition.paginationRequest.toPageRequest())
+        return tradeStatsRequestRdsRepository.findAllWithCountry(
+            condition.paginationRequest.toPageRequest()
+        )
     }
 }

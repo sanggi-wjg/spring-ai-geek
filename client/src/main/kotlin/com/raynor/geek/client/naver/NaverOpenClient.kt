@@ -18,9 +18,9 @@ class NaverOpenClient(
         display: Int = 5,
         start: Int = 1,
     ): Result<NaverSearchResponseDto> {
-        assert(query.isNotBlank()) { "query must not be blank" }
-        assert(display in 10..100) { "display must be between 10 and 100" }
-        assert(start in 1..100) { "start must be between 1 and 100" }
+        check(query.isNotBlank()) { "query must not be blank" }
+        check(display in 10..100) { "display must be between 10 and 100" }
+        check(start in 1..100) { "start must be between 1 and 100" }
 
         return runCatching {
             naverOpenAPI.searchGeneral(
@@ -42,10 +42,10 @@ class NaverOpenClient(
         start: Int = 1,
         sort: String = "sim",
     ): Result<NaverNewsResponseDto> {
-        assert(query.isNotBlank()) { "query must not be blank" }
-        assert(display in 10..100) { "display must be between 10 and 100" }
-        assert(start in 1..100) { "start must be between 1 and 100" }
-        assert(sort in setOf("sim", "date")) { "sort must be sim or date" }
+        check(query.isNotBlank()) { "query must not be blank" }
+        check(display in 10..100) { "display must be between 10 and 100" }
+        check(start in 1..100) { "start must be between 1 and 100" }
+        check(sort in setOf("sim", "date")) { "sort must be sim or date" }
 
         return runCatching {
             naverOpenAPI.searchNews(

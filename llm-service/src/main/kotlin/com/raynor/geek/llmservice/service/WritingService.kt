@@ -26,7 +26,7 @@ class WritingService(
 
     fun helpWriting(text: String): ChatResponse {
         val prompt = PromptFactory.create(
-            ollamaOptions = LlmParameter(OllamaCustomModel.EXAONE_3_5_8b).toOllamaOptions(),
+            ollamaOptions = LlmParameter(OllamaCustomModel.EXAONE_3_5_8b).toOllamaOptions(withTool = false),
             systemResource = systemBasicTemplate,
             userResource = userBasicTemplate,
             ragModel = mapOf("text" to text),
@@ -36,7 +36,7 @@ class WritingService(
 
     fun helpWritingStream(text: String): Flux<ChatResponse> {
         val prompt = PromptFactory.create(
-            ollamaOptions = LlmParameter(OllamaCustomModel.EXAONE_3_5_8b).toOllamaOptions(),
+            ollamaOptions = LlmParameter(OllamaCustomModel.EXAONE_3_5_8b).toOllamaOptions(withTool = false),
             systemResource = systemBasicTemplate,
             userResource = userBasicTemplate,
             ragModel = mapOf("text" to text),

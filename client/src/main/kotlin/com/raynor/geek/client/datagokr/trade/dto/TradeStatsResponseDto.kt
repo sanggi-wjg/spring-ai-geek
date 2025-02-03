@@ -21,6 +21,7 @@ data class TradeStatsResponseDto(
                 data class Item(
                     val balPayments: String,
                     val expDlr: String,
+                    val expWgt: String,
                     val hsCd: String,
                     val impDlr: String,
                     val impWgt: String,

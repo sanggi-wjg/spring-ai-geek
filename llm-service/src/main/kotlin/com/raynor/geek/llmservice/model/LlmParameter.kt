@@ -1,6 +1,5 @@
 package com.raynor.geek.llmservice.model
 
-import com.raynor.geek.llmservice.config.ToolConfig
 import com.raynor.geek.shared.enums.OllamaCustomModel
 import org.springframework.ai.ollama.api.OllamaOptions
 
@@ -181,15 +180,15 @@ fun LlmParameter.toOllamaOptions(withTool: Boolean = false): OllamaOptions {
     this.topK?.also { builder.topK(it) }
 
     withTool.takeIf { it }.also {
-        assert(this.model != OllamaCustomModel.LLAMA_3_1_8b) { "Model does not support tools except llama." }
-        
-        builder.functions(
-            setOf(
-                ToolConfig.TOOL_WEATHER,
-                ToolConfig.TOOL_SEARCH_WEB,
-                ToolConfig.TOOL_SEARCH_NEWS,
-            )
-        )
+        check(this.model != OllamaCustomModel.LLAMA_3_1_8b) { "${this.model} Model does not support tools." }
+
+//        builder.functions(
+//            setOf(
+//                ToolConfig.TOOL_WEATHER,
+//                ToolConfig.TOOL_SEARCH_WEB,
+//                ToolConfig.TOOL_SEARCH_NEWS,
+//            )
+//        )
     }
 
     return builder.build()

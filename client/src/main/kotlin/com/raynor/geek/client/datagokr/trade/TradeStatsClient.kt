@@ -14,12 +14,12 @@ class TradeStatsClient(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun getTradeStats(startMonth: String, endMonth: String, countryCode: String): Result<TradeStatsResponseDto> {
-        assert(startMonth.isNotBlank()) { "startMonth must not be blank" }
-        assert(endMonth.isNotBlank()) { "endMonth must not be blank" }
-        assert(countryCode.isNotBlank()) { "countryCode must not be blank" }
-        assert(startMonth.length == 6) { "startMonth must be 6 digits" } // YYYYMM
-        assert(endMonth.length == 6) { "endMonth must be 6 digits" }
-        assert(countryCode.length == 2) { "countryCode must be 2 digits" }
+        check(startMonth.isNotBlank()) { "startMonth must not be blank" }
+        check(endMonth.isNotBlank()) { "endMonth must not be blank" }
+        check(countryCode.isNotBlank()) { "countryCode must not be blank" }
+        check(startMonth.length == 6) { "startMonth must be 6 digits" } // YYYYMM
+        check(endMonth.length == 6) { "endMonth must be 6 digits" }
+        check(countryCode.length == 2) { "countryCode must be 2 digits" }
         // 요청 가능 범위는 1년 까지, 필요시 validation
 
         return runCatching {

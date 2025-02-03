@@ -16,7 +16,7 @@ class TavilyClient(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun searchWeb(query: String): Result<TavilySearchResponseDto> {
-        assert(query.isNotBlank()) { "query must not be blank" }
+        check(query.isNotBlank()) { "query must not be blank" }
 
         return runCatching {
             val request = TavilySearchRequestDto(
@@ -38,7 +38,7 @@ class TavilyClient(
     }
 
     fun searchNews(query: String): Result<TavilySearchResponseDto> {
-        assert(query.isNotBlank()) { "query must not be blank" }
+        check(query.isNotBlank()) { "query must not be blank" }
 
         return runCatching {
             val request = TavilySearchRequestDto(

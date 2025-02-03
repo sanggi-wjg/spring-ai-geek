@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 
 @Service
-@Transactional
 class TradeStatsRequestService(
     private val countryRdsRepository: CountryRdsRepository,
     private val tradeStatsRequestRdsRepository: TradeStatsRequestRdsRepository,

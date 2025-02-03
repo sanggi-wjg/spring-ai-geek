@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class CountryService(
     private val countryRdsRepository: CountryRdsRepository,
 ) {

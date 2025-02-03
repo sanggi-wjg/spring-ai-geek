@@ -31,6 +31,6 @@ Content-Type: application/json
 
 
 ### Trade Stats Requests
-GET localhost:8090/api/v1/countries/0194c057-34f8-c229-862c-253ae9ab5f15/trade-stats-requests
+GET localhost:8090/api/v1/countries/0194c057-34f8-c229-862c-253ae9ab5f15/trade-stats-requests?page=4
 Content-Type: application/json
 

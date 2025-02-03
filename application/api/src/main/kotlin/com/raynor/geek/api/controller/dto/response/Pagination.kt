@@ -13,7 +13,7 @@ data class Pagination(
 ) {
     companion object {
         fun <T> valueOf(page: Page<T>) = Pagination(
-            page = page.number,
+            page = page.number + 1,
             size = page.size,
             totalPages = page.totalPages,
             totalElements = page.totalElements,

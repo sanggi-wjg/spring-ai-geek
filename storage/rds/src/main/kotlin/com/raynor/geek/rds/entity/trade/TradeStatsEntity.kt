@@ -11,11 +11,12 @@ import java.time.Instant
 @Table(
     name = "trade_stats", schema = "public",
     uniqueConstraints = [
-        UniqueConstraint(name = "unq_conversation_history_001", columnNames = ["country_id", "month", "hs_code"]),
+        UniqueConstraint(name = "unq_trade_stats_001", columnNames = ["country_id", "month", "hs_code"]),
     ]
 )
 class TradeStatsEntity(
-    countryCode: CountryEntity,
+    country: CountryEntity,
+    tradeStatsRequest: TradeStatsRequestEntity,
     month: String,
     hsCode: String,
     description: String,
@@ -27,9 +28,16 @@ class TradeStatsEntity(
     createdAt: Instant,
 ) : PrimaryKey() {
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false, updatable = false)
-    var countryEntity: CountryEntity = countryCode
+    var countryEntity: CountryEntity = country
+        private set
+
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trade_stats_request_id", nullable = false, updatable = false)
+    var tradeStatsRequestEntity: TradeStatsRequestEntity = tradeStatsRequest
         private set
 
     @NotNull

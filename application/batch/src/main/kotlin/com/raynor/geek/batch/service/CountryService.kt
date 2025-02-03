@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class CountryService(
     private val objectMapper: ObjectMapper,
     private val countryRdsRepository: CountryRdsRepository,

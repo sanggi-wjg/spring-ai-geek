@@ -6,46 +6,26 @@ import java.time.Instant
 import java.util.*
 
 data class TradeStatsRequestResponseDto(
-    val countryId: UUID,
-    val countryName: String,
-    val countryCode: String,
-    val countryAlpha2Code: String,
-    val requests: List<TradeStatsRequest>,
+    val id: UUID,
+    val startMonth: String,
+    val endMonth: String,
+    val isPulled: Boolean,
+    val pulledAt: Instant?,
 ) {
-    data class TradeStatsRequest(
-        val id: UUID,
-        val startMonth: String,
-        val endMonth: String,
-        val createdAt: Instant,
-        val isPulled: Boolean,
-        val pulledAt: Instant?,
-    )
-
     companion object {
-        fun valueOf(tradeStatsRequestEntities: List<TradeStatsRequestEntity>) =
-            tradeStatsRequestEntities.groupBy { it.country }.map { (country, requests) ->
-                TradeStatsRequestResponseDto(
-                    countryId = country.id,
-                    countryCode = country.code,
-                    countryName = country.name,
-                    countryAlpha2Code = country.alpha2,
-                    requests = requests.map {
-                        TradeStatsRequestResponseDto.TradeStatsRequest(
-                            id = it.id,
-                            startMonth = it.startMonth,
-                            endMonth = it.endMonth,
-                            createdAt = it.createdAt,
-                            isPulled = it.isPulled,
-                            pulledAt = it.pulledAt,
-                        )
-                    },
-                )
-            }
+        fun valueOf(tradeStatsRequestEntity: TradeStatsRequestEntity) =
+            TradeStatsRequestResponseDto(
+                id = tradeStatsRequestEntity.id,
+                startMonth = tradeStatsRequestEntity.startMonth,
+                endMonth = tradeStatsRequestEntity.endMonth,
+                isPulled = tradeStatsRequestEntity.isPulled,
+                pulledAt = tradeStatsRequestEntity.pulledAt,
+            )
     }
 }
 
 fun Page<TradeStatsRequestEntity>.toPageResponseDto() =
     PaginationItems(
         page = Pagination.valueOf(this),
-        items = TradeStatsRequestResponseDto.valueOf(this.content),
+        items = this.content.map { TradeStatsRequestResponseDto.valueOf(it) },
     )

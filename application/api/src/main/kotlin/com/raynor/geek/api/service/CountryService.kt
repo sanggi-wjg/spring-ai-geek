@@ -13,9 +13,7 @@ class CountryService(
     private val countryRdsRepository: CountryRdsRepository,
 ) {
     @Transactional(readOnly = true)
-    fun getCountries(
-        condition: CountrySearchCondition
-    ): Page<CountryEntity> {
-        return countryRdsRepository.findAllByCondition(condition)
+    fun getCountries(condition: CountrySearchCondition): Page<CountryEntity> {
+        return countryRdsRepository.findPageByCondition(condition)
     }
 }

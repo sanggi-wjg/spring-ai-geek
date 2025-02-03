@@ -14,7 +14,7 @@ import java.util.*
 interface CountryRdsRepository : JpaRepository<CountryEntity, UUID>, CountryQueryDslRepository
 
 interface CountryQueryDslRepository {
-    fun findAllByCondition(condition: CountrySearchCondition): Page<CountryEntity>
+    fun findPageByCondition(condition: CountrySearchCondition): Page<CountryEntity>
 }
 
 class CountryQueryDslRepositoryImpl(
@@ -23,7 +23,7 @@ class CountryQueryDslRepositoryImpl(
 
     private val country = QCountryEntity.countryEntity
 
-    override fun findAllByCondition(condition: CountrySearchCondition): Page<CountryEntity> {
+    override fun findPageByCondition(condition: CountrySearchCondition): Page<CountryEntity> {
         val pageRequest = condition.paginationRequest.toPageRequest()
 
         val result = jpaQueryFactory

@@ -17,18 +17,15 @@ import org.springframework.web.bind.annotation.RestController
 class SearchApiHistoryController(
     private val searchApiHistoryService: SearchApiHistoryService,
 ) {
-
     @GetMapping("")
     fun getSearchApiHistories(
-        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "1") page: Int,
         @RequestParam(defaultValue = "10") size: Int,
-        @RequestParam(defaultValue = "id") sortBy: String,
-        @RequestParam(defaultValue = "DESC") sortDirection: String,
         @RequestParam("query", required = false) query: String?,
     ): ResponseEntity<PaginationItems<SearchApiHistoryResponseDto>> {
         return searchApiHistoryService.getSearchApiHistories(
             SearchApiHistorySearchCondition(
-                paginationRequest = PaginationRequest(page, size, sortBy, sortDirection),
+                paginationRequest = PaginationRequest(page - 1, size),
                 query = query,
             )
         ).let {

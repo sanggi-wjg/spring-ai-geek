@@ -1,5 +1,5 @@
 ### 웹 검색
-POST http://localhost:8080/searching-assistant/
+POST http://localhost:8090/searching-assistant/
 Content-Type: application/json
 
 {
@@ -7,7 +7,7 @@ Content-Type: application/json
 }
 
 ### 벡터 디비 검색
-POST http://localhost:8080/searching-assistant/vector
+POST http://localhost:8090/searching-assistant/vector
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 
 ### 글 작성 도우미
-POST http://localhost:8080/writing-assistant
+POST http://localhost:8090/writing-assistant
 Content-Type: application/json
 
 {
@@ -25,12 +25,12 @@ Content-Type: application/json
 
 
 ### Countires
-#GET localhost:8090/api/v1/countries?page=5&size=20&sortBy=name&sortDirection=ASC
-GET localhost:8090/api/v1/countries?page=0&size=20&sortBy=name&sortDirection=ASC&code=410&alpha2=KR&name=Korea
+#GET localhost:8090/api/v1/countries?page=6&size=20&sortBy=name&sortDirection=ASC
+GET localhost:8090/api/v1/countries?page=1&size=20&sortBy=name&sortDirection=ASC&code=410&alpha2=KR&name=Korea
 Content-Type: application/json
 
 
 ### Trade Stats Requests
-GET localhost:8090/api/v1/trade-stats-requests?page=1
+GET localhost:8090/api/v1/countries/0194c057-34f8-c229-862c-253ae9ab5f15/trade-stats-requests
 Content-Type: application/json
 

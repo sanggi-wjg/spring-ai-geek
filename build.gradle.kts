@@ -6,6 +6,7 @@ plugins {
     kotlin("kapt") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     kotlin("plugin.jpa") version "1.9.25"
+    kotlin("plugin.noarg") version "1.9.25"
 }
 
 allprojects {
@@ -25,6 +26,7 @@ subprojects {
         plugin("kotlin-kapt")
         plugin("kotlin-spring")
         plugin("kotlin-jpa")
+        plugin("kotlin-noarg")
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")

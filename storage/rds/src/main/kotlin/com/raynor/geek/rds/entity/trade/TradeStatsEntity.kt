@@ -12,8 +12,6 @@ import java.time.Instant
     name = "trade_stats", schema = "public",
     uniqueConstraints = [
         UniqueConstraint(name = "unq_trade_stats_001", columnNames = ["country_id", "month", "hs_code"]),
-        UniqueConstraint(name = "unq_trade_stats_002", columnNames = ["trade_stats_request_id"]),
-        UniqueConstraint(name = "unq_trade_stats_003", columnNames = ["country_id", "trade_stats_request_id"]),
     ]
 )
 class TradeStatsEntity(

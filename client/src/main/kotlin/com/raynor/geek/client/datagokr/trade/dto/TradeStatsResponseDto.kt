@@ -1,36 +1,60 @@
 package com.raynor.geek.client.datagokr.trade.dto
 
-data class TradeStatsResponseDto(
-    val response: Response
-) {
-    data class Response(
-        val header: Header,
-        val body: Body,
-    ) {
-        data class Header(
-            val resultCode: String,
-            val resultMsg: String,
-        )
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-        data class Body(
-            val items: ItemList,
-        ) {
-            data class ItemList(
-                val item: List<Item>,
-            ) {
-                data class Item(
-                    val balPayments: String,
-                    val expDlr: String,
-                    val expWgt: String,
-                    val hsCd: String,
-                    val impDlr: String,
-                    val impWgt: String,
-                    val statCd: String,
-                    val statCdCntnKor1: String,
-                    val statKor: String,
-                    val year: String,
-                )
-            }
-        }
+@JacksonXmlRootElement(localName = "response")
+data class TradeStatsResponseDto(
+    @field:JacksonXmlProperty(localName = "header")
+    val header: Header,
+
+    @field:JacksonXmlProperty(localName = "body")
+    val body: Body
+) {
+    data class Header(
+        @field:JacksonXmlProperty(localName = "resultCode")
+        val resultCode: String,
+
+        @field:JacksonXmlProperty(localName = "resultMsg")
+        val resultMsg: String
+    )
+
+    data class Body(
+        @field:JacksonXmlElementWrapper(useWrapping = true) // 리스트 매핑을 위해 설정
+        @field:JacksonXmlProperty(localName = "items")
+        val items: List<Item>,
+    ) {
+        data class Item(
+            @field:JacksonXmlProperty(localName = "balPayments")
+            val balPayments: String,
+
+            @field:JacksonXmlProperty(localName = "expDlr")
+            val expDlr: String,
+
+            @field:JacksonXmlProperty(localName = "expWgt")
+            val expWgt: String,
+
+            @field:JacksonXmlProperty(localName = "hsCd")
+            val hsCd: String,
+
+            @field:JacksonXmlProperty(localName = "impDlr")
+            val impDlr: String,
+
+            @field:JacksonXmlProperty(localName = "impWgt")
+            val impWgt: String,
+
+            @field:JacksonXmlProperty(localName = "statCd")
+            val statCd: String,
+
+            @field:JacksonXmlProperty(localName = "statCdCntnKor1")
+            val statCdCntnKor1: String,
+
+            @field:JacksonXmlProperty(localName = "statKor")
+            val statKor: String,
+
+            @field:JacksonXmlProperty(localName = "year")
+            val year: String,
+        )
     }
 }

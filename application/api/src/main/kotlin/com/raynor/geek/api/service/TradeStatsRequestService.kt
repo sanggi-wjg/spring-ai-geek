@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.transaction.support.TransactionTemplate
 import java.math.BigDecimal
 import java.time.Instant
 import java.util.*
@@ -22,7 +21,6 @@ class TradeStatsRequestService(
     private val tradeStatsRequestRdsRepository: TradeStatsRequestRdsRepository,
     private val tradeStatsRdsRepository: TradeStatsRdsRepository,
     private val tradeStatsClient: TradeStatsClient,
-    private val transactionTemplate: TransactionTemplate,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -44,8 +42,8 @@ class TradeStatsRequestService(
         ).getOrThrow()
 
         val now = Instant.now()
-        return tradeStatsResponse.response.body.items.item.filter {
-            it.year != "총계"
+        return tradeStatsResponse.body.items.filter {
+            it.year != "총계" || it.hsCd == "-"
         }.map {
             TradeStatsEntity(
                 country = request.country,
@@ -61,6 +59,7 @@ class TradeStatsRequestService(
                 createdAt = now,
             )
         }.let {
+            request.synced()
             tradeStatsRdsRepository.saveAll(it)
         }
     }

@@ -25,16 +25,17 @@ Content-Type: application/json
 
 
 ### Countires
+GET localhost:8090/api/v1/countries?alpha2=DK
 #GET localhost:8090/api/v1/countries?page=6&size=20&sortBy=name&sortDirection=ASC
-GET localhost:8090/api/v1/countries?page=1&size=20&sortBy=name&sortDirection=ASC&code=410&alpha2=KR&name=Korea
+#GET localhost:8090/api/v1/countries?page=1&size=20&sortBy=name&sortDirection=ASC&code=410&alpha2=KR&name=Korea
 Content-Type: application/json
 
 
 ### Trade Stats Requests
-GET localhost:8090/api/v1/countries/0194c057-34f8-c229-862c-253ae9ab5f15/trade-stats-requests?page=4
+GET localhost:8090/api/v1/countries/0194c057-34f8-c229-862c-253ae9ab5eda/trade-stats-requests?page=3
 Content-Type: application/json
 
 
 ### Sync Trade Stats
-PUT localhost:8090/api/v1/trade-stats-requests/{{id}}/sync
+PUT localhost:8090/api/v1/trade-stats-requests/0194c466-da01-dc83-c5ca-38092e48ea47/sync
 Content-Type: application/json

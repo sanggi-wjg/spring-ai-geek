@@ -9,8 +9,8 @@ data class TradeStatsRequestResponseDto(
     val id: UUID,
     val startMonth: String,
     val endMonth: String,
-    val isPulled: Boolean,
-    val pulledAt: Instant?,
+    val isSynced: Boolean,
+    val syncedAt: Instant?,
 ) {
     companion object {
         fun valueOf(tradeStatsRequestEntity: TradeStatsRequestEntity) =
@@ -18,8 +18,8 @@ data class TradeStatsRequestResponseDto(
                 id = tradeStatsRequestEntity.id,
                 startMonth = tradeStatsRequestEntity.startMonth,
                 endMonth = tradeStatsRequestEntity.endMonth,
-                isPulled = tradeStatsRequestEntity.isPulled,
-                pulledAt = tradeStatsRequestEntity.pulledAt,
+                isSynced = tradeStatsRequestEntity.isSynced,
+                syncedAt = tradeStatsRequestEntity.syncedAt,
             )
     }
 }

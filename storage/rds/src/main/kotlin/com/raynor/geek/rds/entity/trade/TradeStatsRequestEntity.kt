@@ -43,16 +43,16 @@ class TradeStatsRequestEntity(
         private set
 
     @NotNull
-    @Column(name = "is_pulled", nullable = false)
-    var isPulled: Boolean = false
+    @Column(name = "is_synced", nullable = false)
+    var isSynced: Boolean = false
         private set
 
-    @Column(name = "pulled_at", insertable = false)
-    var pulledAt: Instant? = null
+    @Column(name = "synced_at", insertable = false)
+    var syncedAt: Instant? = null
         private set
 
-    fun pulled() {
-        this.isPulled = true
-        this.pulledAt = Instant.now()
+    fun synced() {
+        this.isSynced = true
+        this.syncedAt = Instant.now()
     }
 }

@@ -51,7 +51,7 @@ class TradeStatsEntity(
         private set
 
     @NotNull
-    @Column(name = "description", nullable = false, updatable = false)
+    @Column(name = "description", nullable = false, length = 500, updatable = false)
     var description: String = description
         private set
 

@@ -21,7 +21,7 @@ class TradeStatsRequestController(
     ): ResponseEntity<Boolean> {
         // todo: impl idempotency
         return tradeStatsRequestService.syncTradeStats(id).let {
-            ResponseEntity.created(URI.create("/api/v1/trade-stats")).body(true)
+            ResponseEntity.created(URI.create("/api/v1/trade-stats/todo")).body(true)
         }
     }
 }

@@ -37,5 +37,5 @@ Content-Type: application/json
 
 
 ### Sync Trade Stats
-PUT localhost:8090/api/v1/trade-stats-requests/0194c466-da01-dc83-c5ca-38092e48ea47/sync
+PUT localhost:8090/api/v1/trade-stats-requests/0194c466-dacd-7465-7453-b1a4a3facfc8/sync
 Content-Type: application/json

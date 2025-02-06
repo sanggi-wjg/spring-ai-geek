@@ -17,7 +17,7 @@ class TradeStatsRequestService(
 ) {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    fun createTradeStatsRequest() {
+    fun syncTradeStatsRequestIfNotExists() {
         val yearMonthList = DateUtil.getYearMonthList()
         val countries = countryRdsRepository.findAll()
         val requests = tradeStatsRequestRdsRepository.findAll()

@@ -1,7 +1,7 @@
 package com.raynor.geek.batch.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.raynor.geek.batch.model.Iso3166Country
+import com.raynor.geek.batch.model.CountryResource
 import com.raynor.geek.rds.entity.trade.CountryEntity
 import com.raynor.geek.rds.repository.CountryRdsRepository
 import org.slf4j.LoggerFactory
@@ -18,11 +18,11 @@ class CountryService(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    fun createCountryIfNotExists(): List<CountryEntity> {
-        val isoCountries = loadIso3166Country()
+    fun syncCountryIfNotExists(): List<CountryEntity> {
+        val countryResource = loadCountryResource()
         val countries = countryRdsRepository.findAll()
         val codes = countries.map { it.code }
-        val newCountries = isoCountries.filter { it.countryCode !in codes }
+        val newCountries = countryResource.filter { it.countryCode !in codes }
 
         return if (newCountries.isNotEmpty()) {
             logger.info("Insert new countries: {}", newCountries)
@@ -32,15 +32,15 @@ class CountryService(
         }
     }
 
-    private fun loadIso3166Country(): List<Iso3166Country> {
+    private fun loadCountryResource(): List<CountryResource> {
         val resource = ClassPathResource("iso3166/slim-2.json")
 
         return resource.inputStream.use {
-            objectMapper.readValue(it, Array<Iso3166Country>::class.java).toList()
+            objectMapper.readValue(it, Array<CountryResource>::class.java).toList()
         }
     }
 
-    private fun List<Iso3166Country>.toCountryEntity(): List<CountryEntity> {
+    private fun List<CountryResource>.toCountryEntity(): List<CountryEntity> {
         return this.map {
             CountryEntity(
                 name = it.name,

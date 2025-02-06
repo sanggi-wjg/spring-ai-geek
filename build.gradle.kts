@@ -6,17 +6,25 @@ plugins {
     kotlin("kapt") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     kotlin("plugin.jpa") version "1.9.25"
-    kotlin("plugin.noarg") version "1.9.25"
 }
 
 allprojects {
     group = "com.raynor.demo"
     version = "0.0.1-SNAPSHOT"
 
+    apply {
+        plugin("kotlin-noarg")
+    }
+
     repositories {
         mavenCentral()
         maven { url = uri("https://repo.spring.io/milestone") }
         maven { url = uri("https://repo.spring.io/snapshot") }
+    }
+
+    noArg {
+        annotation("javax.xml.bind.annotation.XmlRootElement")
+        annotation("com.raynor.geek.shared.annotations.NoArg")
     }
 }
 
@@ -26,7 +34,6 @@ subprojects {
         plugin("kotlin-kapt")
         plugin("kotlin-spring")
         plugin("kotlin-jpa")
-        plugin("kotlin-noarg")
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")

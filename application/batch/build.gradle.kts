@@ -11,6 +11,9 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // csv
+    implementation("com.opencsv:opencsv:5.8")
 }
 
 val jar: Jar by tasks

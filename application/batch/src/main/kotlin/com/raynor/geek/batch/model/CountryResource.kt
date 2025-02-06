@@ -2,7 +2,7 @@ package com.raynor.geek.batch.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class Iso3166Country(
+data class CountryResource(
     val name: String,
     @JsonProperty("country-code")
     val countryCode: String,

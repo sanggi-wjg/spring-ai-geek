@@ -3,6 +3,8 @@ package com.raynor.geek.rds.entity.trade
 import com.raynor.geek.rds.entity.PrimaryKey
 import jakarta.persistence.*
 import org.hibernate.annotations.Comment
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import org.jetbrains.annotations.NotNull
 import java.math.BigDecimal
 import java.time.Instant
@@ -19,6 +21,9 @@ class TradeStatsEntity(
     tradeStatsRequest: TradeStatsRequestEntity,
     month: String,
     hsCode: String,
+    hsCode2: String,
+    hsCode4: String,
+    hsCode6: String,
     description: String,
     importWeight: BigDecimal,
     importAmount: BigDecimal,
@@ -29,12 +34,14 @@ class TradeStatsEntity(
 ) : PrimaryKey() {
 
     @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false, updatable = false)
     var countryEntity: CountryEntity = country
         private set
 
     @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trade_stats_request_id", nullable = false, updatable = false)
     var tradeStatsRequestEntity: TradeStatsRequestEntity = tradeStatsRequest
@@ -48,6 +55,21 @@ class TradeStatsEntity(
     @NotNull
     @Column(name = "hs_code", nullable = false, length = 100, updatable = false)
     var hsCode: String = hsCode
+        private set
+
+    @NotNull
+    @Column(name = "hs_code2", nullable = false, length = 2, updatable = false)
+    var hsCode2: String = hsCode2
+        private set
+
+    @NotNull
+    @Column(name = "hs_code4", nullable = false, length = 4, updatable = false)
+    var hsCode4: String = hsCode4
+        private set
+
+    @NotNull
+    @Column(name = "hs_code6", nullable = false, length = 6, updatable = false)
+    var hsCode6: String = hsCode6
         private set
 
     @NotNull

@@ -1,10 +1,7 @@
 package com.raynor.geek.batch.scheduler
 
 import com.raynor.geek.client.slack.SlackClient
-import com.raynor.geek.client.slack.dto.SlackWebHookMessageFactory
-import com.raynor.geek.llmservice.model.LlmParameter
 import com.raynor.geek.llmservice.service.SearchingService
-import com.raynor.geek.shared.enums.OllamaCustomModel
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -21,12 +18,12 @@ class KeywordSearchingScheduler(
     fun run() {
         logger.info("[SearchHistoryScheduler] Start")
 
-        val chatResponse = searchingService.searchNews(
-            query = "애플 주식",
-            llmParameter = LlmParameter(model = OllamaCustomModel.EXAONE_3_5_8b, temperature = 0.1)
-        )
-        val message = SlackWebHookMessageFactory.newsLetter(chatResponse.result.output.text)
-        slackClient.sendWebHook(message)
+//        val chatResponse = searchingService.searchNews(
+//            query = "애플 주식",
+//            llmParameter = LlmParameter(model = OllamaCustomModel.EXAONE_3_5_8b, temperature = 0.1)
+//        )
+//        val message = SlackWebHookMessageFactory.newsLetter(chatResponse.result.output.text)
+//        slackClient.sendWebHook(message)
 
         logger.info("[SearchHistoryScheduler] Finished")
     }

@@ -10,6 +10,8 @@ Spring-ai를 통한 데모 서비스 구현
 
 ## TODO
 
+굳이 잘 알지도 못하는 벡터 디비 사용으로 인프라나 복잡하게 하지 말고 postgre나 elastic search 사용하는것도 좋아보임
+
 * [ ] Batch는 Spring Batch로 할까 말까 갈까 말까
 * [ ] Impl ChatMemory?
     * 구현되어 있는게 Map 이용한거 밖에 없고 디스크나 매체를 통한 저장이 없음. 찾아보면 PR 올라온게 있음

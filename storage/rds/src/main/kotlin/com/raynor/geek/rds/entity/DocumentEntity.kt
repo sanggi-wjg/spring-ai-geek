@@ -27,7 +27,7 @@ class DocumentEntity(
         private set
 
     @NotNull
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     var createdAt: Instant = createdAt
         private set
 

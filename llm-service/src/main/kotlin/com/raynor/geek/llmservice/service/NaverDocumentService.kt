@@ -8,8 +8,8 @@ import com.raynor.geek.client.naver.dto.NaverSearchResponseDto
 import com.raynor.geek.client.naver.exception.NaverOpenAPIException
 import com.raynor.geek.llmservice.service.document.DocumentConverter
 import com.raynor.geek.rds.entity.DocumentEntity
-import com.raynor.geek.rds.entity.SearchAPIHistoryEntity
-import com.raynor.geek.rds.repository.SearchHistoryRdsRepository
+import com.raynor.geek.rds.entity.SearchApiHistoryEntity
+import com.raynor.geek.rds.repository.SearchApiHistoryRdsRepository
 import com.raynor.geek.shared.enums.SearchAPIType
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
@@ -19,7 +19,7 @@ import java.time.Instant
 @Service
 class NaverDocumentService(
     private val naverOpenClient: NaverOpenClient,
-    private val searchHistoryRdsRepository: SearchHistoryRdsRepository,
+    private val searchApiHistoryRdsRepository: SearchApiHistoryRdsRepository,
     private val objectMapper: ObjectMapper,
 ) {
 
@@ -40,8 +40,8 @@ class NaverDocumentService(
     }
 
     private fun saveSearchResponse(query: String, searchResponse: NaverSearchResponseDto) {
-        searchHistoryRdsRepository.save(
-            SearchAPIHistoryEntity(
+        searchApiHistoryRdsRepository.save(
+            SearchApiHistoryEntity(
                 query = query,
                 responseData = objectMapper.convertValue(searchResponse, object : TypeReference<Map<String, Any>>() {}),
                 searchAPIType = SearchAPIType.NAVER_OPEN_API,
@@ -51,8 +51,8 @@ class NaverDocumentService(
     }
 
     private fun saveSearchResponse(query: String, searchResponse: NaverNewsResponseDto) {
-        searchHistoryRdsRepository.save(
-            SearchAPIHistoryEntity(
+        searchApiHistoryRdsRepository.save(
+            SearchApiHistoryEntity(
                 query = query,
                 responseData = objectMapper.convertValue(searchResponse, object : TypeReference<Map<String, Any>>() {}),
                 searchAPIType = SearchAPIType.NAVER_OPEN_API,

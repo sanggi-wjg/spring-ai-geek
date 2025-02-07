@@ -7,8 +7,8 @@ import com.raynor.geek.client.tavily.dto.TavilySearchResponseDto
 import com.raynor.geek.client.tavily.exception.TavilyAPIException
 import com.raynor.geek.llmservice.service.document.DocumentConverter
 import com.raynor.geek.rds.entity.DocumentEntity
-import com.raynor.geek.rds.entity.SearchAPIHistoryEntity
-import com.raynor.geek.rds.repository.SearchHistoryRdsRepository
+import com.raynor.geek.rds.entity.SearchApiHistoryEntity
+import com.raynor.geek.rds.repository.SearchApiHistoryRdsRepository
 import com.raynor.geek.shared.enums.SearchAPIType
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
@@ -18,7 +18,7 @@ import java.time.Instant
 @Service
 class TavilyDocumentService(
     private val tavilyClient: TavilyClient,
-    private val searchHistoryRdsRepository: SearchHistoryRdsRepository,
+    private val searchApiHistoryRdsRepository: SearchApiHistoryRdsRepository,
     private val objectMapper: ObjectMapper,
 ) {
 
@@ -39,8 +39,8 @@ class TavilyDocumentService(
     }
 
     private fun saveSearchResponse(searchResponse: TavilySearchResponseDto) {
-        searchHistoryRdsRepository.save(
-            SearchAPIHistoryEntity(
+        searchApiHistoryRdsRepository.save(
+            SearchApiHistoryEntity(
                 query = searchResponse.query,
                 responseData = objectMapper.convertValue(searchResponse, object : TypeReference<Map<String, Any>>() {}),
                 searchAPIType = SearchAPIType.TAVILY_API,

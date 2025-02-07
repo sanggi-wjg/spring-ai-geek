@@ -12,10 +12,19 @@ allprojects {
     group = "com.raynor.demo"
     version = "0.0.1-SNAPSHOT"
 
+    apply {
+        plugin("kotlin-noarg")
+    }
+
     repositories {
         mavenCentral()
         maven { url = uri("https://repo.spring.io/milestone") }
         maven { url = uri("https://repo.spring.io/snapshot") }
+    }
+
+    noArg {
+        annotation("javax.xml.bind.annotation.XmlRootElement")
+        annotation("com.raynor.geek.shared.annotations.NoArg")
     }
 }
 

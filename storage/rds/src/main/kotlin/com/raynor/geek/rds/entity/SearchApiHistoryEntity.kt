@@ -14,7 +14,7 @@ import java.time.Instant
         Index(name = "idx_search_api_history_001", columnList = "query, search_api_type"),
     ]
 )
-class SearchAPIHistoryEntity(
+class SearchApiHistoryEntity(
     query: String,
     searchAPIType: SearchAPIType,
     responseData: Map<String, Any>,
@@ -47,7 +47,7 @@ class SearchAPIHistoryEntity(
 //        private set
 
     @NotNull
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     var createdAt: Instant = createdAt
         private set
 

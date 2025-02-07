@@ -8,6 +8,15 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("io.github.openfeign:feign-hc5")
 //    implementation("io.github.openfeign:feign-micrometer")
+
+    // for xml
+    implementation("io.github.openfeign:feign-jackson")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+    implementation("com.fasterxml.jackson.module:jackson-module-jaxb-annotations")
+
+//    implementation("io.github.openfeign:feign-jaxb")
+//    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+//    implementation("org.glassfish.jaxb:jaxb-runtime")
 }
 
 val jar: Jar by tasks

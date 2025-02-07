@@ -35,6 +35,7 @@ logging:
     #    org.springframework: DEBUG
     org.springframework.ai: DEBUG
     org.springframework.web: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
     org.hibernate.sql: TRACE
     org.hibernate.orm.jdbc.bind: TRACE
     feign: TRACE

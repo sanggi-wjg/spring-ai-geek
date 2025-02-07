@@ -12,6 +12,7 @@ pandas = "^2.2.3"
 jupyter = "^1.1.1"
 xmltodict = "^0.14.2"
 python-dotenv = "^1.0.1"
+thread-manager-py = "^0.3.0"
 
 [build-system]
 requires = ["poetry-core"]

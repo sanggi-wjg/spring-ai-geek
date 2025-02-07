@@ -21,6 +21,9 @@ api:
   slack:
     webhook:
       own-channel: ${SLACK_WEBHOOK_OWN_CHANNEL}
+  datagokr:
+    trade-stats:
+      url: http://apis.data.go.kr/1220000/nitemtrade/getNitemtradeList
 
 secret:
   tavily:
@@ -29,6 +32,8 @@ secret:
     openapi:
       client-id: ${NAVER_OPEN_API_CLIENT_ID}
       client-secret: ${NAVER_OPEN_API_CLIENT_SECRET}
+  datagokr:
+    key: ${DATA_GO_KR_SERVICE_KEY}
 
 
 ---

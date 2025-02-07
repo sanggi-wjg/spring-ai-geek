@@ -1,3 +1,6 @@
 /gradlew text eol=lf
 *.bat text eol=crlf
 *.jar binary
+
+special-vendored-path/* linguist-vendored
+dataflow/**.ipynb linguist-vendored

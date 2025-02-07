@@ -42,17 +42,15 @@ class TradeStatsRequestService(
         ).getOrThrow()
 
         val now = Instant.now()
-        return tradeStatsResponse.body.items.filter {
-            it.year != "총계" || it.hsCd == "-"
-        }.map {
+        return tradeStatsResponse.body.items.filter { it.year != "총계" || it.hsCd != "-" }.map {
             TradeStatsEntity(
                 country = request.country,
                 tradeStatsRequest = request,
                 month = it.year.replace(".", ""),
                 hsCode = it.hsCd,
-                hsCode2 = it.hsCd.substring(0, 3),
-                hsCode4 = it.hsCd.substring(0, 5),
-                hsCode6 = it.hsCd.substring(0, 7),
+                hsCode2 = it.hsCdFirst2Digit,
+                hsCode4 = it.hsCdFirst4Digit,
+                hsCode6 = it.hsCdFirst6Digit,
                 description = it.statKor,
                 importWeight = BigDecimal(it.impWgt),
                 importAmount = BigDecimal(it.impDlr),

@@ -31,10 +31,12 @@ class TradeStatsRequestQueryDslRepositoryImpl(
             .innerJoin(country).on(tradeStatsRequest.country.id.eq(country.id))
             .where(
                 condition.countryId?.let { tradeStatsRequest.country.id.eq(it) },
+                condition.isSynced?.let { tradeStatsRequest.isSynced.eq(it) },
             )
             .orderBy(tradeStatsRequest.startMonth.asc(), tradeStatsRequest.endMonth.asc())
             .offset(pageRequest.offset)
             .limit(pageRequest.pageSize.toLong())
+            .setHint(this::class.java.simpleName, "findPageByCondition")
             .fetch()
 
         val count = jpaQueryFactory
@@ -43,7 +45,9 @@ class TradeStatsRequestQueryDslRepositoryImpl(
             .innerJoin(country).on(tradeStatsRequest.country.id.eq(country.id))
             .where(
                 condition.countryId?.let { tradeStatsRequest.country.id.eq(it) },
+                condition.isSynced?.let { tradeStatsRequest.isSynced.eq(it) },
             )
+            .setHint(this::class.java.simpleName, "findPageByCondition")
             .fetchFirst()
 
         return PageImpl(result, pageRequest, count)

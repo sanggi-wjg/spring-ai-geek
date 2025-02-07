@@ -55,6 +55,10 @@ data class TradeStatsResponseDto(
 
             @field:JacksonXmlProperty(localName = "year")
             val year: String,
-        )
+        ) {
+            val hsCdFirst2Digit by lazy { hsCd.substring(0, 2) }
+            val hsCdFirst4Digit by lazy { hsCd.substring(0, 4) }
+            val hsCdFirst6Digit by lazy { hsCd.substring(0, 6) }
+        }
     }
 }

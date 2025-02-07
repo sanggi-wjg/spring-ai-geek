@@ -32,6 +32,7 @@ class CountryQueryDslRepositoryImpl(
                 condition.code?.let { country.code.eq(it) },
                 condition.name?.let { country.name.containsIgnoreCase(it) },
                 condition.alpha2?.let { country.alpha2.eq(it) },
+                condition.alpha2s?.let { country.alpha2.`in`(it) },
             )
             .orderBy(
                 when (condition.sortBy) {
@@ -45,6 +46,7 @@ class CountryQueryDslRepositoryImpl(
             )
             .offset(pageRequest.offset)
             .limit(pageRequest.pageSize.toLong())
+            .setHint(this::class.java.simpleName, "findPageByCondition")
             .fetch()
 
         val count = jpaQueryFactory
@@ -54,7 +56,9 @@ class CountryQueryDslRepositoryImpl(
                 condition.code?.let { country.code.eq(it) },
                 condition.name?.let { country.name.contains(it) },
                 condition.alpha2?.let { country.alpha2.eq(it) },
+                condition.alpha2s?.let { country.alpha2.`in`(it) },
             )
+            .setHint(this::class.java.simpleName, "findPageByCondition")
             .fetchFirst()
 
         return PageImpl(result, pageRequest, count)

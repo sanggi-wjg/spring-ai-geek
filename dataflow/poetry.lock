@@ -2257,6 +2257,17 @@ test = ["pre-commit", "pytest (>=7.0)", "pytest-timeout"]
 typing = ["mypy (>=1.6,<2.0)", "traitlets (>=5.11.1)"]
 
 [[package]]
+name = "thread-manager-py"
+version = "0.3.0"
+description = "Python Thread Manager"
+optional = false
+python-versions = "*"
+files = [
+    {file = "thread-manager-py-0.3.0.tar.gz", hash = "sha256:f1d06f93ebbbfedcca27a67841371d9a1e0107a717973bef50e828c9004e68f1"},
+    {file = "thread_manager_py-0.3.0-py3-none-any.whl", hash = "sha256:993d2f57aecfaa583fb5956a4326def9d4d7e7ed009efd955003959849eb7b25"},
+]
+
+[[package]]
 name = "tinycss2"
 version = "1.4.0"
 description = "A tiny CSS parser"
@@ -2447,4 +2458,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "9e6da458dfb92801637d4bb68de98b7c4efd8ba29a424cecb9b6202b64a7e1fb"
+content-hash = "2d6aa169eb46c5794169a2882dea5b2bc46f39c055b863e77b3fb8e5abb971fb"

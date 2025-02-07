@@ -36,6 +36,7 @@ class SearchApiHistoryQueryDslRepositoryImpl(
             .orderBy(searchApiHistory.id.desc())
             .offset(pageRequest.offset)
             .limit(pageRequest.pageSize.toLong())
+            .setHint(this::class.java.simpleName, "findPageByCondition")
             .fetch()
 
         val count = jpaQueryFactory
@@ -44,6 +45,7 @@ class SearchApiHistoryQueryDslRepositoryImpl(
             .where(
                 condition.query?.let { searchApiHistory.query.containsIgnoreCase(it) },
             )
+            .setHint(this::class.java.simpleName, "findPageByCondition")
             .fetchFirst()
 
         return PageImpl(result, pageRequest, count)

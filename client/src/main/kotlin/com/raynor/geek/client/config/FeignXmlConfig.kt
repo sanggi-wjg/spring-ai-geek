@@ -1,20 +1,13 @@
 package com.raynor.geek.client.config
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule
-import feign.jackson.JacksonDecoder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.codec.xml.Jaxb2XmlDecoder
 
 
 @Configuration
 class FeignXmlConfig {
 
-    fun customXmlObjectMapper(): ObjectMapper =
-        ObjectMapper().registerModules(
-            JaxbAnnotationModule(),
-        )
-
     @Bean
-    fun feignDecoder() = JacksonDecoder(customXmlObjectMapper())
+    fun feignDecoder() = Jaxb2XmlDecoder()
 }

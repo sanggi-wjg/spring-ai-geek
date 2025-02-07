@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.net.URI
 import java.util.*
 
 @RestController
@@ -18,10 +17,10 @@ class TradeStatsRequestController(
     @PutMapping("/{id}/sync")
     fun syncTradeStats(
         @PathVariable("id") id: UUID,
-    ): ResponseEntity<Boolean> {
+    ): ResponseEntity<Unit> {
         // todo: impl idempotency
         return tradeStatsRequestService.syncTradeStats(id).let {
-            ResponseEntity.created(URI.create("/api/v1/trade-stats/todo")).body(true)
+            ResponseEntity.noContent().build()
         }
     }
 }

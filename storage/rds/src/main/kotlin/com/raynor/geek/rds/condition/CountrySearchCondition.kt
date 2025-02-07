@@ -10,4 +10,5 @@ data class CountrySearchCondition(
     val code: String?,
     val name: String?,
     val alpha2: String?,
+    val alpha2s: List<String>?
 )

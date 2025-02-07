@@ -30,6 +30,7 @@ class CountryController(
         @RequestParam("code", required = false) code: String?,
         @RequestParam("name", required = false) name: String?,
         @RequestParam("alpha2", required = false) alpha2: String?,
+        @RequestParam("alpha2s", required = false) alpha2s: List<String>?,
     ): ResponseEntity<PaginationItems<CountryResponseDto>> {
         return countryService.getCountries(
             CountrySearchCondition(
@@ -39,6 +40,7 @@ class CountryController(
                 code = code,
                 name = name,
                 alpha2 = alpha2,
+                alpha2s = alpha2s,
             )
         ).let {
             ResponseEntity.ok(it.toPageResponseDto())
@@ -50,11 +52,13 @@ class CountryController(
         @RequestParam(defaultValue = "1") page: Int,
         @RequestParam(defaultValue = "100") size: Int,
         @PathVariable("id") id: UUID,
+        @RequestParam("isSynced", required = false) isSynced: Boolean,
     ): ResponseEntity<PaginationItems<TradeStatsRequestResponseDto>> {
         return tradeStatsRequestService.getTradeStatsRequests(
             condition = TradeStatsRequestSearchCondition(
                 paginationRequest = PaginationRequest(page - 1, size),
                 countryId = id,
+                isSynced = isSynced,
             )
         ).let {
             ResponseEntity.ok(it.toPageResponseDto())

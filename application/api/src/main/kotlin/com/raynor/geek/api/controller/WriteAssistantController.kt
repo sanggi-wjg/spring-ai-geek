@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 
 @RestController
-@RequestMapping("/writing-assistant")
-class WritingAssistantController(
+@RequestMapping("/write-assistant")
+class WriteAssistantController(
     private val writingService: WritingService,
 ) {
 

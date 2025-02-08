@@ -37,14 +37,14 @@ class TradeStatsEntity(
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false, updatable = false)
-    var countryEntity: CountryEntity = country
+    var country: CountryEntity = country
         private set
 
     @NotNull
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trade_stats_request_id", nullable = false, updatable = false)
-    var tradeStatsRequestEntity: TradeStatsRequestEntity = tradeStatsRequest
+    var tradeStatsRequest: TradeStatsRequestEntity = tradeStatsRequest
         private set
 
     @NotNull

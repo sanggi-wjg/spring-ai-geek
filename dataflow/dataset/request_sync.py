@@ -4,18 +4,24 @@ from thread_manager import ThreadManager, ThreadArgument
 
 def get_countries():
     results = []
-    params = {"page": 1, "alpha2s": ["DK", "US"]}
+    # params = {"page": 1, "alpha2s": ['AF', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'AQ', 'AG']}
+    #
+    # while True:
+    #     response = requests.get(url="http://localhost:8090/api/v1/countries", params=params)
+    #     response.raise_for_status()
+    #     resp = response.json()
+    #
+    #     results.extend(resp["items"])
+    #     params["page"] += 1
+    #
+    #     if not resp["page"]["hasNext"]:
+    #         break
+    params = {"page": 1, "size": 10}
 
-    while True:
-        response = requests.get(url="http://localhost:8090/api/v1/countries", params=params)
-        response.raise_for_status()
-        resp = response.json()
-
-        results.extend(resp["items"])
-        params["page"] += 1
-
-        if not resp["page"]["hasNext"]:
-            break
+    response = requests.get(url="http://localhost:8090/api/v1/countries", params=params)
+    response.raise_for_status()
+    resp = response.json()
+    results.extend(resp["items"])
 
     return results
 

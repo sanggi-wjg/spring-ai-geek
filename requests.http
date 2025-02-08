@@ -1,5 +1,18 @@
+### Chatting
+POST http://localhost:8090/chat-stream
+Content-Type: application/json
+Accept: text/event-stream
+Accept-Charset: UTF-8
+
+{
+  "userInput": "2024년 백엔드 개발자 채용 통계",
+  "llmParameter": {
+    "model": "EXAONE_3_5_8b"
+  }
+}
+
 ### 웹 검색
-POST http://localhost:8090/searching-assistant/
+POST http://localhost:8090/search-assistant/
 Content-Type: application/json
 
 {
@@ -7,7 +20,7 @@ Content-Type: application/json
 }
 
 ### 벡터 디비 검색
-POST http://localhost:8090/searching-assistant/vector
+POST http://localhost:8090/search-assistant/vector
 Content-Type: application/json
 
 {

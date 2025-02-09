@@ -45,7 +45,7 @@ class TradeStatsQueryDslRepositoryImpl(
             .join(tradeStatsRequest).on(tradeStatsRequest.id.eq(tradeStats.tradeStatsRequest.id))
             .where(
                 searchCondition.countryAlpha2?.let { country.alpha2.eq(it) },
-                searchCondition.hsCode2?.let { tradeStats.hsCode.eq(it) },
+                searchCondition.hsCode2?.let { tradeStats.hsCode2.eq(it) },
                 searchCondition.hsCode4?.let { tradeStats.hsCode4.eq(it) },
             )
             .orderBy(

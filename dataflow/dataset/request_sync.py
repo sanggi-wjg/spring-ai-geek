@@ -4,7 +4,7 @@ from thread_manager import ThreadManager, ThreadArgument
 
 def get_countries():
     results = []
-    params = {"page": 6, "size": 10}
+    params = {"page": 8, "size": 10}
     # params = {"page": 1, "alpha2s": ['HK', 'HU', 'IN', 'ID', 'IL', 'IT', 'JM', 'JP']}
     # 'HK', 'HU', 'IN', 'ID', 'IL', 'IT', 'JM', 'JP'
     # 'BE', 'BA', 'BR', 'BN', 'BG', 'BI', 'KH', 'CM', 'CA', 'CL', 'CN', 'CO', 'CG', 'HR', 'CU', 'CZ', 'DK', 'EC', 'EG', 'FR', 'GE', 'DE', 'GR', 'GD'

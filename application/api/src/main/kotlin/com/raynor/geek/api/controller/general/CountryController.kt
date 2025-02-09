@@ -1,4 +1,4 @@
-package com.raynor.geek.api.controller
+package com.raynor.geek.api.controller.general
 
 import com.raynor.geek.api.controller.dto.response.CountryResponseDto
 import com.raynor.geek.api.controller.dto.response.PaginationItems

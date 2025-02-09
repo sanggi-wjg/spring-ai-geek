@@ -6,6 +6,7 @@ import com.raynor.geek.rds.entity.trade.CountryEntity
 import com.raynor.geek.rds.entity.trade.QCountryEntity
 import com.raynor.geek.rds.repository.helper.orderDirection
 import com.raynor.geek.shared.enums.CountrySortBy
+import org.hibernate.jpa.HibernateHints
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.jpa.repository.JpaRepository
@@ -46,7 +47,7 @@ class CountryQueryDslRepositoryImpl(
             )
             .offset(pageRequest.offset)
             .limit(pageRequest.pageSize.toLong())
-            .setHint(this::class.java.simpleName, "findPageByCondition")
+            .setHint(HibernateHints.HINT_COMMENT, "${this::class.java}::findPageByCondition}")
             .fetch()
 
         val count = jpaQueryFactory
@@ -58,7 +59,7 @@ class CountryQueryDslRepositoryImpl(
                 condition.alpha2?.let { country.alpha2.eq(it) },
                 condition.alpha2s?.let { country.alpha2.`in`(it) },
             )
-            .setHint(this::class.java.simpleName, "findPageByCondition")
+            .setHint(HibernateHints.HINT_COMMENT, "${this::class.java}::findPageByCondition}")
             .fetchFirst()
 
         return PageImpl(result, pageRequest, count)

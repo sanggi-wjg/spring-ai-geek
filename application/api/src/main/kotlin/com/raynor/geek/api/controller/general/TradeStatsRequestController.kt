@@ -1,4 +1,4 @@
-package com.raynor.geek.api.controller
+package com.raynor.geek.api.controller.general
 
 import com.raynor.geek.api.service.TradeStatsRequestService
 import org.springframework.http.ResponseEntity

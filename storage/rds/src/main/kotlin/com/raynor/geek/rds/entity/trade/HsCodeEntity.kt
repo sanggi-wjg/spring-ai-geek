@@ -1,10 +1,7 @@
 package com.raynor.geek.rds.entity.trade
 
 import com.raynor.geek.rds.entity.PrimaryKey
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Table
-import jakarta.persistence.UniqueConstraint
+import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
 
 @Entity
@@ -12,6 +9,9 @@ import org.jetbrains.annotations.NotNull
     name = "hs_code", schema = "public",
     uniqueConstraints = [
         UniqueConstraint(name = "unq_hs_code_001", columnNames = ["code"]),
+    ],
+    indexes = [
+        Index(name = "idx_hs_code_001", columnList = "code"),
     ]
 )
 class HsCodeEntity(

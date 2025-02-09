@@ -5,6 +5,7 @@ import com.raynor.geek.rds.condition.TradeStatsRequestSearchCondition
 import com.raynor.geek.rds.entity.trade.QCountryEntity
 import com.raynor.geek.rds.entity.trade.QTradeStatsRequestEntity
 import com.raynor.geek.rds.entity.trade.TradeStatsRequestEntity
+import org.hibernate.jpa.HibernateHints
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.jpa.repository.JpaRepository
@@ -36,7 +37,7 @@ class TradeStatsRequestQueryDslRepositoryImpl(
             .orderBy(tradeStatsRequest.startMonth.asc(), tradeStatsRequest.endMonth.asc())
             .offset(pageRequest.offset)
             .limit(pageRequest.pageSize.toLong())
-            .setHint(this::class.java.simpleName, "findPageByCondition")
+            .setHint(HibernateHints.HINT_COMMENT, "${this::class.java}::findPageByCondition}")
             .fetch()
 
         val count = jpaQueryFactory
@@ -47,7 +48,7 @@ class TradeStatsRequestQueryDslRepositoryImpl(
                 condition.countryId?.let { tradeStatsRequest.country.id.eq(it) },
                 condition.isSynced?.let { tradeStatsRequest.isSynced.eq(it) },
             )
-            .setHint(this::class.java.simpleName, "findPageByCondition")
+            .setHint(HibernateHints.HINT_COMMENT, "${this::class.java}::findPageByCondition}")
             .fetchFirst()
 
         return PageImpl(result, pageRequest, count)

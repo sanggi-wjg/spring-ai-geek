@@ -4,8 +4,12 @@ from thread_manager import ThreadManager, ThreadArgument
 
 def get_countries():
     results = []
-    # params = {"page": 1, "alpha2s": ['AF', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'AQ', 'AG']}
-    #
+    params = {"page": 6, "size": 10}
+    # params = {"page": 1, "alpha2s": ['HK', 'HU', 'IN', 'ID', 'IL', 'IT', 'JM', 'JP']}
+    # 'HK', 'HU', 'IN', 'ID', 'IL', 'IT', 'JM', 'JP'
+    # 'BE', 'BA', 'BR', 'BN', 'BG', 'BI', 'KH', 'CM', 'CA', 'CL', 'CN', 'CO', 'CG', 'HR', 'CU', 'CZ', 'DK', 'EC', 'EG', 'FR', 'GE', 'DE', 'GR', 'GD'
+    # 'NL', 'NZ', 'NO', 'PY', 'PE', 'PH', 'PL', 'PT', 'PR', 'QA', 'RO', 'RU', 'SA', 'SN', 'RS', 'SG', 'ZA', 'ES', 'SE', 'CH', 'SY', 'TW', 'TR', 'UA', 'AE', 'GB', 'US', 'UY', 'UZ', 'VE', 'VN'
+
     # while True:
     #     response = requests.get(url="http://localhost:8090/api/v1/countries", params=params)
     #     response.raise_for_status()
@@ -16,7 +20,6 @@ def get_countries():
     #
     #     if not resp["page"]["hasNext"]:
     #         break
-    params = {"page": 1, "size": 10}
 
     response = requests.get(url="http://localhost:8090/api/v1/countries", params=params)
     response.raise_for_status()
@@ -47,18 +50,19 @@ def sync_trade_stats():
             if not resp["page"]["hasNext"]:
                 break
 
-            # for s in stats_requests:
-            #     sync(s)
-            manager = ThreadManager(
-                sync,
-                [ThreadArgument(thread_name=f"Thread:{s}", args=(s,)) for s in stats_requests],
-            )
-            manager.run()
+        for s in stats_requests:
+            sync(s, country)
+
+        # manager = ThreadManager(
+        #     callable_func=sync,
+        #     thread_arguments=[ThreadArgument(thread_name=f"Thread:{s}", args=(s, country)) for s in stats_requests],
+        # )
+        # manager.run()
 
 
-def sync(stat_request):
+def sync(stat_request, country):
     response = requests.put(f"http://localhost:8090/api/v1/trade-stats-requests/{stat_request['id']}/sync")
-    print(stat_request, response.status_code, response.text)
+    print(country, stat_request, response.status_code, response.text)
 
 
 sync_trade_stats()

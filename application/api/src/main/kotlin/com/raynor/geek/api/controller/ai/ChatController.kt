@@ -1,4 +1,4 @@
-package com.raynor.geek.api.controller
+package com.raynor.geek.api.controller.ai
 
 import com.raynor.geek.api.controller.dto.request.ChatRequestDto
 import com.raynor.geek.llmservice.service.ChattingService

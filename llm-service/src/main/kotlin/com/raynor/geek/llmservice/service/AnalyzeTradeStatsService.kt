@@ -3,8 +3,8 @@ package com.raynor.geek.llmservice.service
 import com.raynor.geek.llmservice.model.LlmParameter
 import com.raynor.geek.llmservice.model.toOllamaOptions
 import com.raynor.geek.llmservice.service.factory.PromptFactory
+import com.raynor.geek.rds.condition.TradeStatsSearchCondition
 import com.raynor.geek.rds.repository.TradeStatsRdsRepository
-import com.raynor.geek.shared.enums.OllamaCustomModel
 import org.springframework.ai.ollama.OllamaChatModel
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
@@ -25,15 +25,26 @@ class AnalyzeTradeStatsService(
     lateinit var userBasicTemplate: Resource
 
     @Transactional(readOnly = true)
-    fun analyzeTradeStats(): Flux<String> {
-        val tradeStats = tradeStatsRdsRepository.findSomething()
+    fun analyzeTradeStats(
+        llmParameter: LlmParameter,
+        countryAlpha2: String,
+        hsCode2: String?,
+        hsCode4: String?,
+    ): Flux<String> {
+        val tradeStats = tradeStatsRdsRepository.findAllByCondition(
+            searchCondition = TradeStatsSearchCondition(
+                countryAlpha2 = countryAlpha2,
+                hsCode2 = hsCode2,
+                hsCode4 = hsCode4,
+            )
+        )
         val documents = tradeStats.map {
             "Country:${it.country.name} Month:${it.tradeStats.month} HsCode:${it.tradeStats.hsCode} ItemDescription${it.tradeStats.description} " +
                     "ImportAmount:${it.tradeStats.importAmount} ImportWeight:${it.tradeStats.importWeight} ExportAmount:${it.tradeStats.exportAmount} ExportWeight:${it.tradeStats.exportWeight}"
         }
 
         val prompt = PromptFactory.create(
-            ollamaOptions = LlmParameter(model = OllamaCustomModel.EXAONE_3_5_8b).toOllamaOptions(),
+            ollamaOptions = llmParameter.toOllamaOptions(),
             systemResource = systemBasicTemplate,
             userResource = userBasicTemplate,
             ragModel = mapOf(

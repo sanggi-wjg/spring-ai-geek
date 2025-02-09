@@ -2,20 +2,22 @@ package com.raynor.geek.rds.repository
 
 import com.querydsl.core.types.Projections
 import com.querydsl.jpa.impl.JPAQueryFactory
+import com.raynor.geek.rds.condition.TradeStatsSearchCondition
 import com.raynor.geek.rds.entity.trade.QCountryEntity
 import com.raynor.geek.rds.entity.trade.QTradeStatsEntity
 import com.raynor.geek.rds.entity.trade.QTradeStatsRequestEntity
 import com.raynor.geek.rds.entity.trade.TradeStatsEntity
 import com.raynor.geek.rds.projection.TradeStatsProjection
+import org.hibernate.jpa.HibernateHints
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
-interface TradeStatsRdsRepository : JpaRepository<TradeStatsEntity, UUID>, TradeStatsQueryDslRepository
+interface TradeStatsRdsRepository : JpaRepository<TradeStatsEntity, UUID>, TradeStatsQueryDslRepository {
+    fun deleteByTradeStatsRequestId(tradeStatsRequestId: UUID): Long
+}
 
 interface TradeStatsQueryDslRepository {
-    fun findSomething(): List<TradeStatsProjection>
-
-    fun deleteByTradeStatsRequestId(tradeStatsRequestId: UUID): Long
+    fun findAllByCondition(searchCondition: TradeStatsSearchCondition): List<TradeStatsProjection>
 }
 
 class TradeStatsQueryDslRepositoryImpl(
@@ -26,7 +28,9 @@ class TradeStatsQueryDslRepositoryImpl(
     private val tradeStats = QTradeStatsEntity.tradeStatsEntity
     private val tradeStatsRequest = QTradeStatsRequestEntity.tradeStatsRequestEntity
 
-    override fun findSomething(): List<TradeStatsProjection> {
+    override fun findAllByCondition(
+        searchCondition: TradeStatsSearchCondition
+    ): List<TradeStatsProjection> {
         return jpaQueryFactory
             .select(
                 Projections.constructor(
@@ -40,21 +44,15 @@ class TradeStatsQueryDslRepositoryImpl(
             .join(country).on(country.id.eq(tradeStats.country.id))
             .join(tradeStatsRequest).on(tradeStatsRequest.id.eq(tradeStats.tradeStatsRequest.id))
             .where(
-                country.alpha2.`in`("DK"),
-                tradeStats.hsCode2.eq("57")
+                searchCondition.countryAlpha2?.let { country.alpha2.eq(it) },
+                searchCondition.hsCode2?.let { tradeStats.hsCode.eq(it) },
+                searchCondition.hsCode4?.let { tradeStats.hsCode4.eq(it) },
             )
             .orderBy(
-                country.id.asc(),
                 tradeStats.month.asc(),
                 tradeStats.hsCode.asc(),
             )
+            .setHint(HibernateHints.HINT_COMMENT, "${this::class.java}::findAllByCondition}")
             .fetch()
-    }
-
-    override fun deleteByTradeStatsRequestId(tradeStatsRequestId: UUID): Long {
-        return jpaQueryFactory
-            .delete(tradeStats)
-            .where(tradeStatsRequest.id.eq(tradeStatsRequestId))
-            .execute()
     }
 }

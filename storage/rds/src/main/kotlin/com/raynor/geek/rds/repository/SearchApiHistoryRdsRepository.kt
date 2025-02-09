@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 import com.raynor.geek.rds.condition.SearchApiHistorySearchCondition
 import com.raynor.geek.rds.entity.QSearchApiHistoryEntity
 import com.raynor.geek.rds.entity.SearchApiHistoryEntity
+import org.hibernate.jpa.HibernateHints
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.jpa.repository.JpaRepository
@@ -36,7 +37,7 @@ class SearchApiHistoryQueryDslRepositoryImpl(
             .orderBy(searchApiHistory.id.desc())
             .offset(pageRequest.offset)
             .limit(pageRequest.pageSize.toLong())
-            .setHint(this::class.java.simpleName, "findPageByCondition")
+            .setHint(HibernateHints.HINT_COMMENT, "${this::class.java}::findPageByCondition}")
             .fetch()
 
         val count = jpaQueryFactory
@@ -45,7 +46,7 @@ class SearchApiHistoryQueryDslRepositoryImpl(
             .where(
                 condition.query?.let { searchApiHistory.query.containsIgnoreCase(it) },
             )
-            .setHint(this::class.java.simpleName, "findPageByCondition")
+            .setHint(HibernateHints.HINT_COMMENT, "${this::class.java}::findPageByCondition}")
             .fetchFirst()
 
         return PageImpl(result, pageRequest, count)

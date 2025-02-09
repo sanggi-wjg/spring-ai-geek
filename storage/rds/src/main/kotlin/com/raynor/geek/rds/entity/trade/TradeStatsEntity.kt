@@ -14,7 +14,15 @@ import java.time.Instant
     name = "trade_stats", schema = "public",
     uniqueConstraints = [
         UniqueConstraint(name = "unq_trade_stats_001", columnNames = ["country_id", "month", "hs_code"]),
-    ]
+    ],
+    indexes = [
+        Index(name = "idx_trade_stats_001", columnList = "month"),
+        Index(name = "idx_trade_stats_002", columnList = "hsCode2"),
+        Index(name = "idx_trade_stats_003", columnList = "hsCode4"),
+        Index(name = "idx_trade_stats_004", columnList = "hsCode6"),
+        Index(name = "idx_trade_stats_005", columnList = "country_id"),
+        Index(name = "idx_trade_stats_006", columnList = "trade_stats_request_id"),
+    ],
 )
 class TradeStatsEntity(
     country: CountryEntity,

@@ -33,7 +33,7 @@ class CountryService(
     }
 
     private fun loadCountryResource(): List<CountryResource> {
-        val resource = ClassPathResource("iso3166/slim-2.json")
+        val resource = ClassPathResource("iso3166/country.json")
 
         return resource.inputStream.use {
             objectMapper.readValue(it, Array<CountryResource>::class.java).toList()
@@ -46,6 +46,7 @@ class CountryService(
                 name = it.name,
                 code = it.countryCode,
                 alpha2 = it.alpha2,
+                isSyncable = it.isSyncable,
             )
         }
     }

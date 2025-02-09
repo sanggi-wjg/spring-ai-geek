@@ -13,7 +13,11 @@ import java.time.Instant
             name = "unq_trade_stats_request_001",
             columnNames = ["country_id", "start_month", "end_month"],
         ),
-    ]
+    ],
+    indexes = [
+        Index(name = "idx_trade_stats_request_001", columnList = "start_month, end_month"),
+        Index(name = "idx_trade_stats_request_002", columnList = "country_id"),
+    ],
 )
 class TradeStatsRequestEntity(
     country: CountryEntity,

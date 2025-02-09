@@ -1,10 +1,7 @@
 package com.raynor.geek.rds.entity.trade
 
 import com.raynor.geek.rds.entity.PrimaryKey
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Table
-import jakarta.persistence.UniqueConstraint
+import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
 
 @Entity
@@ -13,12 +10,18 @@ import org.jetbrains.annotations.NotNull
     uniqueConstraints = [
         UniqueConstraint(name = "unq_country_001", columnNames = ["code"]),
         UniqueConstraint(name = "unq_country_002", columnNames = ["alpha2"]),
-    ]
+    ],
+    indexes = [
+        Index(name = "idx_country_001", columnList = "name"),
+        Index(name = "idx_country_002", columnList = "code"),
+        Index(name = "idx_country_003", columnList = "alpha2"),
+    ],
 )
 class CountryEntity(
     name: String,
     code: String,
     alpha2: String,
+    isSyncable: Boolean,
 ) : PrimaryKey() {
 
     @NotNull
@@ -34,5 +37,10 @@ class CountryEntity(
     @NotNull
     @Column(name = "alpha2", nullable = false, length = 2, updatable = false)
     var alpha2: String = alpha2
+        private set
+
+    @NotNull
+    @Column(name = "is_syncable", nullable = false, updatable = false)
+    var isSyncable: Boolean = isSyncable
         private set
 }

@@ -12,7 +12,9 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
-interface CountryRdsRepository : JpaRepository<CountryEntity, UUID>, CountryQueryDslRepository
+interface CountryRdsRepository : JpaRepository<CountryEntity, UUID>, CountryQueryDslRepository {
+    fun findByAlpha2(alpha2: String): CountryEntity?
+}
 
 interface CountryQueryDslRepository {
     fun findPageByCondition(condition: CountrySearchCondition): Page<CountryEntity>

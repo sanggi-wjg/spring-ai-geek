@@ -21,7 +21,6 @@ class AnalyzeController(
         analyzeTradeStatsService.analyzeTradeStats(
             llmParameter = requestDto.llmParameter,
             countryAlpha2 = requestDto.countryAlpha2,
-            hsCode2 = requestDto.hsCode2,
             hsCode4 = requestDto.hsCode4,
         )
         return ResponseEntity.noContent().build()

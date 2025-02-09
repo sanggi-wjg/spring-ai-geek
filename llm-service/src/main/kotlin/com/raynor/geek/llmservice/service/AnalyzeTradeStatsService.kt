@@ -6,7 +6,9 @@ import com.raynor.geek.llmservice.model.LlmParameter
 import com.raynor.geek.llmservice.model.toOllamaOptions
 import com.raynor.geek.llmservice.service.factory.PromptFactory
 import com.raynor.geek.rds.condition.TradeStatsSearchCondition
+import com.raynor.geek.rds.repository.CountryRdsRepository
 import com.raynor.geek.rds.repository.TradeStatsRdsRepository
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.ai.ollama.OllamaChatModel
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.Resource
@@ -17,8 +19,9 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class AnalyzeTradeStatsService(
     private val llm: OllamaChatModel,
-    private val tradeStatsRdsRepository: TradeStatsRdsRepository,
     private val slackClient: SlackClient,
+    private val countryRdsRepository: CountryRdsRepository,
+    private val tradeStatsRdsRepository: TradeStatsRdsRepository,
 ) {
     @Value("classpath:prompts/searching/system-basic.st")
     lateinit var systemBasicTemplate: Resource
@@ -30,20 +33,22 @@ class AnalyzeTradeStatsService(
     fun analyzeTradeStats(
         llmParameter: LlmParameter,
         countryAlpha2: String,
-        hsCode2: String?,
-        hsCode4: String?,
+        hsCode4: String,
     ) {
-        val tradeStats = tradeStatsRdsRepository.findAllByCondition(
+        val country = countryRdsRepository.findByAlpha2(countryAlpha2)
+            ?: throw EntityNotFoundException("country not found: $countryAlpha2")
+
+        val tradeStats = tradeStatsRdsRepository.findAggregateByCondition(
             searchCondition = TradeStatsSearchCondition(
                 countryAlpha2 = countryAlpha2,
-                hsCode2 = hsCode2,
+                hsCode2 = null,
                 hsCode4 = hsCode4,
             )
         )
-        val documents = tradeStats.map {
-            "Country:${it.country.name} Month:${it.tradeStats.month} HsCode:${it.tradeStats.hsCode} ItemDescription${it.tradeStats.description} " +
-                    "ImportAmount:${it.tradeStats.importAmount} ImportWeight:${it.tradeStats.importWeight} ExportAmount:${it.tradeStats.exportAmount} ExportWeight:${it.tradeStats.exportWeight}\n"
-        }
+        val documents = "Trade Statistics of ${country.name}\n" + tradeStats.map {
+            "Month:${it.month} ItemDescription${it.description} ImportAmount:${it.importAmount} ImportWeight:${it.importWeight}" +
+                    " ExportAmount:${it.exportAmount} ExportWeight:${it.exportWeight} TradeBalance:${it.tradeBalance}"
+        }.joinToString("\n")
 
         val prompt = PromptFactory.create(
             ollamaOptions = llmParameter.toOllamaOptions(),
